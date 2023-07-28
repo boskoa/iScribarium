@@ -1,5 +1,6 @@
 function errorHandler(error, req, res, next) {
-  console.log("ERROR", error.name, error.message);
+  console.error("ERROR", error.name, error.message);
+  res.status(400).json({ error: error.message });
   next();
 }
 

@@ -28,7 +28,6 @@ router.get("/", async (req, res, next) => {
     });
     return res.status(200).json(authors);
   } catch (error) {
-    res.status(400).json({ error: error.message });
     next(error);
   }
 });
@@ -68,10 +67,6 @@ router.post("/", async (req, res, next) => {
     });
     return res.status(200).json(newAuthor);
   } catch (error) {
-    res.status(400).json({
-      error:
-        "Registration failed. Check your data formating/try another username",
-    });
     next(error);
   }
 });
@@ -100,7 +95,6 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
     });
     return res.status(200).json(changedAuthor);
   } catch (error) {
-    res.status(401).json({ error: "Update failed" });
     next(error);
   }
 });
@@ -116,7 +110,6 @@ router.delete("/:id", async (req, res, next) => {
     await Author.destroy({ where: { id: req.params.id } });
     return res.status(200).send(`Author with the id ${req.params.id} deleted`);
   } catch (error) {
-    res.status(401).json({ error });
     next(error);
   }
 });
