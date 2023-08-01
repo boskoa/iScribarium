@@ -6,6 +6,7 @@ const { router: articlesRouter } = require("./controllers/articles");
 const { router: authorsRouter } = require("./controllers/authors");
 const { router: categoriesRouter } = require("./controllers/categories");
 const { router: loginRouter } = require("./controllers/login");
+const { router: avatarsRouter } = require("./controllers/avatars");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/articles", articlesRouter);
 app.use("/api/authors", authorsRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/avatars", avatarsRouter);
 
 app.use(errorHandler);
 
