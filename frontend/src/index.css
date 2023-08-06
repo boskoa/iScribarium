@@ -2,5 +2,124 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Fuzzy Bubbles', sans-serif;
+}
+
+body {
+  background-color: rgb(159, 236, 236);
+}
+
+#draw-i {
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: draw 0.2s forwards 1s linear;
+}
+
+#draw-s {
+  stroke-dasharray: 39;
+  stroke-dashoffset: 39;
+  animation: draw 0.4s forwards 1.3s linear;
+}
+
+#draw-c {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw 0.3s forwards 1.8s linear;
+}
+
+#draw-r-1 {
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: draw 0.2s forwards 2.2s linear;
+}
+
+#draw-r-2 {
+  stroke-dasharray: 7;
+  stroke-dashoffset: 7;
+  animation: draw 0.1s forwards 2.5s linear;
+}
+
+#draw-ii-1 {
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: draw 0.2s forwards 2.7s linear;
+}
+
+#draw-ii-2 {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+  animation: draw 0.2s forwards 3s linear;
+}
+
+#draw-b-1 {
+  stroke-dasharray: 19;
+  stroke-dashoffset: 19;
+  animation: draw 0.2s forwards 3.3s linear;
+}
+
+#draw-b-2 {
+  stroke-dasharray: 26;
+  stroke-dashoffset: 26;
+  animation: draw 0.2s forwards 3.6s linear;
+}
+
+#draw-a-1 {
+  stroke-dasharray: 19;
+  stroke-dashoffset: 19;
+  animation: draw 0.2s forwards 3.9s linear;
+}
+
+#draw-a-2 {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: draw 0.2s forwards 4.2s linear;
+}
+
+#draw-rr-1 {
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: draw 0.2s forwards 4.5s linear;
+}
+
+#draw-rr-2 {
+  stroke-dasharray: 7;
+  stroke-dashoffset: 7;
+  animation: draw 0.2s forwards 4.8s linear;
+}
+
+#draw-iii-1 {
+  stroke-dasharray: 13;
+  stroke-dashoffset: 13;
+  animation: draw 0.2s forwards 5.1s linear;
+}
+
+#draw-iii-2 {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+  animation: draw 0.2s forwards 5.4s linear;
+}
+
+#draw-u {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.4s forwards 5.7s linear;
+}
+
+#draw-m {
+  stroke-dasharray: 67;
+  stroke-dashoffset: 67;
+  animation: draw 0.5s forwards 6.2s linear;
+}
+
+#draw-dot {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+  filter: drop-shadow(0 0 2px rgb(255, 255, 0));
+  animation: draw 0.2s forwards 6.8s linear;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }

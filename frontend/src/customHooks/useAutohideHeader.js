@@ -1,17 +1,6 @@
 import { useEffect, useRef } from "react";
-import { styled } from "styled-components";
 
-const HeaderContainer = styled.header`
-  position: sticky;
-  top: 0;
-  background-color: blue;
-  width: 100%;
-  transform: translate(0px);
-  z-index: 100;
-  transition: all 0.3s;
-`;
-
-function Header() {
+function useAutohideHeader() {
   const head = useRef(null);
 
   useEffect(() => {
@@ -19,8 +8,8 @@ function Header() {
 
     function handleChange() {
       let newPosition = window.scrollY;
-      if (newPosition >= lastPosition) {
-        head.current.style.transform = "translateY(-20px)";
+      if (newPosition > lastPosition) {
+        head.current.style.transform = "translateY(-51px)";
       } else {
         head.current.style.transform = "translateY(0px)";
       }
@@ -33,7 +22,7 @@ function Header() {
     return () => document.removeEventListener("scroll", handleChange);
   }, []);
 
-  return <HeaderContainer ref={head}>HEADER</HeaderContainer>;
+  return head;
 }
 
-export default Header;
+export default useAutohideHeader;

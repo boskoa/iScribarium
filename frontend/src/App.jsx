@@ -7,6 +7,7 @@ import {
 
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import HomePage from "./components/HomePage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,7 +18,12 @@ function App() {
     {
       path: "/",
       element: <Layout />,
-      children: [],
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+      ],
     },
   ]);
 
