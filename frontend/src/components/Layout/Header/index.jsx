@@ -14,6 +14,7 @@ const HeaderContainer = styled.header`
   background-color: rgb(100, 100, 100);
   width: 100%;
   height: 50px;
+  will-change: transform;
   transform: translateY(0px);
   z-index: 100;
   transition: all 0.3s;

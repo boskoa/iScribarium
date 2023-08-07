@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import useScrollDistance from "../../customHooks/useScrollDistance";
+import { useEffect, useRef } from "react";
 
 const WhaleContainer = styled.div`
   display: flex;
@@ -11,17 +11,32 @@ const WhaleContainer = styled.div`
   width: 80%;
   z-index: -2;
   opacity: 0.3;
+  will-change: transform;
+  transform: translateY(0);
 `;
 
 function Whale() {
-  const [distance] = useScrollDistance();
+  const element = useRef(null);
+
+  useEffect(() => {
+    const htmlElement = document.getElementsByTagName("html")[0];
+    function handleScroll() {
+      const distance = Math.round(
+        Math.abs(htmlElement.getBoundingClientRect().top),
+      );
+      if (element.current) {
+        element.current.style.transform = `translateY(${distance * 0.9})
+        }px)`;
+      }
+    }
+
+    document.addEventListener("scroll", handleScroll);
+
+    return () => document.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <WhaleContainer
-      style={{
-        transform: `translateY(${distance * 0.9}px)`,
-      }}
-    >
+    <WhaleContainer ref={element}>
       <svg
         width="80%"
         version="1.1"
