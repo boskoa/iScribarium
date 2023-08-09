@@ -25,8 +25,7 @@ function Whale() {
         Math.abs(htmlElement.getBoundingClientRect().top),
       );
       if (element.current) {
-        element.current.style.transform = `translateY(${distance * 0.9})
-        }px)`;
+        element.current.style.transform = `translateY(${distance * 0.9}px)`;
       }
     }
 

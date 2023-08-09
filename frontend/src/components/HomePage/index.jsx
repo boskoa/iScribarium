@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Proba from "../Layout/Proba";
 
 function HomePage() {
   useEffect(() => {
@@ -15,7 +16,7 @@ function HomePage() {
 
   return (
     <div id="home">
-      <p>HAI MARK</p>
+      <Proba />
     </div>
   );
 }

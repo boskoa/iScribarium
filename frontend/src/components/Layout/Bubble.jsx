@@ -16,15 +16,15 @@ const BubbleContainer = styled.div`
 function Bubble() {
   const colorRef = useRef(COLORS[Math.floor(Math.random() * COLORS.length)]);
   const color = colorRef.current;
-  const depthRef = useRef(Math.random());
+  const depthRef = useRef(Math.random() * 0.99);
   const depth = depthRef.current;
   const topRandomRef = useRef(Math.random());
   const topRandom = topRandomRef.current;
   const sizeRef = useRef(`${Math.ceil((DEFAULTSIZE * depth) / 8)}vw`);
   const size = sizeRef.current;
   const height = document.getElementsByTagName("html")[0].offsetHeight;
-  const top = `${topRandom * 80}vh`;
-  const left = `${depth * 80}vw`;
+  const top = `${topRandom * height * depth * 0.9}px`;
+  const left = `${topRandom * 80}vw`;
   const element = useRef(null);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function Bubble() {
       const distance = Math.round(
         Math.abs(htmlElement.getBoundingClientRect().top),
       );
+      console.log("FOO", distance * (1 - depth));
       if (element.current) {
         element.current.style.transform = `translateY(${
           distance * (1 - depth)
