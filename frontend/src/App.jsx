@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllAuthors,
@@ -8,6 +8,9 @@ import {
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./components/HomePage";
+import { alreadyLogged } from "./features/authors/loginSlice";
+
+const Login = lazy(() => import("./components/Login"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,6 +18,14 @@ function App() {
   const authors = useSelector(selectAllAuthors);
 
   const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: (
+        <Suspense fallback="Loading...">
+          <Login />
+        </Suspense>
+      ),
+    },
     {
       path: "/",
       element: <Layout />,
@@ -26,6 +37,13 @@ function App() {
       ],
     },
   ]);
+
+  useEffect(() => {
+    const loggedAuthor = window.localStorage.getItem("loggedIScribariumAuthor");
+    if (loggedAuthor) {
+      dispatch(alreadyLogged(JSON.parse(loggedAuthor)));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getAllAuthors(""));

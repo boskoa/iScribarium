@@ -33,7 +33,7 @@ function Bubble() {
       const distance = Math.round(
         Math.abs(htmlElement.getBoundingClientRect().top),
       );
-      console.log("FOO", distance * (1 - depth));
+
       if (element.current) {
         element.current.style.transform = `translateY(${
           distance * (1 - depth)

@@ -1,5 +1,30 @@
-function Profile() {
-  return <div>Profile</div>;
+import { styled } from "styled-components";
+import ProfileIcon from "./ProfileIcon";
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  box-shadow: 0 0 10px 0 rgba(100, 250, 100, 1);
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: none;
+    transform: scale(0.95);
+  }
+`;
+
+function ProfileButton() {
+  return (
+    <IconContainer style={{}}>
+      <ProfileIcon />
+    </IconContainer>
+  );
 }
 
-export default Profile;
+export default ProfileButton;

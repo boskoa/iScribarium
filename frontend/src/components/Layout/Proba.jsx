@@ -25,13 +25,25 @@ const components = {
         margin: "5px 5px 0 10px ",
         padding: 5,
         fontSize: 12,
+        backgroundColor: "rgba(50, 150, 200, 0.3)",
       }}
       {...props}
     />
   ),
   a: (props) => <a {...props} style={{ textDecoration: "none" }} />,
   p: (props) => <p {...props} style={{ textAlign: "justify" }} />,
-  h2: (props) => <h2 {...props} style={{ margin: "15px 0 10px 0" }} />,
+  h2: (props) => (
+    <h2
+      {...props}
+      style={{
+        margin: "15px 0px 10px 0px",
+        display: "inline-block",
+        position: "relative",
+        borderBottom: "2px solid rgba(50, 50, 100, 0.3)",
+      }}
+      className="subtitle"
+    />
+  ),
   h3: (props) => <h3 {...props} style={{ margin: "5px 0" }} />,
 };
 
