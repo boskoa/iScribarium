@@ -55,6 +55,10 @@ router.post("/", async (req, res, next) => {
   ) {
     return res.status(401).json({ error: "Missing required data" });
   }
+
+  if (req.body.password.length < 2) {
+    return res.status(401).json({ error: "Password is too short" });
+  }
   try {
     const passwordHash = await bcrypt.hash(req.body.password, 10);
     const userData = { ...req.body };

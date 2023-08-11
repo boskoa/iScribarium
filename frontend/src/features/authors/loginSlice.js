@@ -12,7 +12,7 @@ const initialState = {
 export const loginAuthor = createAsyncThunk(
   "login/loginAuthor",
   async (data) => {
-    const response = axios.post(BASE_URL, { ...data });
+    const response = await axios.post(BASE_URL, { ...data });
     window.localStorage.setItem(
       "loggedIScribariumAuthor",
       JSON.stringify({ ...response.data }),
