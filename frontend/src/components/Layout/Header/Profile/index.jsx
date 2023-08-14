@@ -2,6 +2,9 @@ import { styled } from "styled-components";
 import ProfileIcon from "./ProfileIcon";
 import { useEffect, useRef, useState } from "react";
 import LoggedInItems from "./LoggedInItems";
+import { useSelector } from "react-redux";
+import LoggedOutItems from "./LoggedOutItems";
+import { selectId } from "../../../../features/login/loginSlice";
 
 const IconContainer = styled.div`
   display: flex;
@@ -30,7 +33,7 @@ const Menu = styled.div`
   top: 0;
   right: 0;
   border-radius: 50px;
-  width: ${({ $show }) => ($show ? "140px" : "30px")};
+  width: ${({ $show }) => ($show ? "170px" : "30px")};
   height: 30px;
   background: linear-gradient(to left, transparent 30px, gray 70px);
   padding: 6px 24px 6px 6px;
@@ -43,6 +46,7 @@ const Menu = styled.div`
 function ProfileButton() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
+  const authorLogged = useSelector(selectId);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -64,7 +68,7 @@ function ProfileButton() {
     >
       <ProfileIcon />
       <Menu $show={showMenu}>
-        <LoggedInItems />
+        {authorLogged ? <LoggedInItems /> : <LoggedOutItems />}
       </Menu>
     </IconContainer>
   );

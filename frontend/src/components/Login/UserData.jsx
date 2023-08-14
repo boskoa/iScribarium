@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { styled, keyframes, css } from "styled-components";
-import { alreadyLogged, loginAuthor } from "../../features/authors/loginSlice";
+import {
+  loginAuthor,
+  selectId,
+  selectLoginError,
+} from "../../features/login/loginSlice";
 import { useNavigate } from "react-router-dom";
+import useTimedMessage from "../../customHooks/useTimedMessage";
+import { DevTool } from "@hookform/devtools";
 
 const LoginForm = styled.form`
   display: flex;
@@ -87,34 +93,55 @@ const LoginInput = styled.input`
 function UserData() {
   const [submitted, setSubmitted] = useState(false);
   const [canceled, setCanceled] = useState(false);
-  const loggedAuthor = useSelector(alreadyLogged);
+  const addMessage = useTimedMessage();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loginError = useSelector(selectLoginError);
+  const loggedAuthor = useSelector(selectId);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    control,
+  } = useForm({ mode: "onBlur" });
 
   function handleLogin(data) {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 600);
     dispatch(loginAuthor(data));
-    navigate(-1);
-    console.log("FORM", data);
   }
 
   function handleCancel() {
     setCanceled(true);
-    setTimeout(() => setCanceled(false), 600);
+    setTimeout(() => {
+      setCanceled(false);
+      navigate(-1);
+    }, 600);
   }
 
   useEffect(() => {
     if (loggedAuthor) {
+      console.log("LOADING", loggedAuthor);
+      addMessage({ content: "Uspešna prijava", variety: "success" });
       navigate(-1);
     }
-  }, [loggedAuthor, navigate]);
+  }, [loggedAuthor, addMessage, navigate]);
+
+  useEffect(() => {
+    if (errors.username?.message) {
+      addMessage({ content: errors.username?.message, variety: "error" });
+    }
+    if (errors.password?.message) {
+      addMessage({ content: errors.password?.message, variety: "error" });
+    }
+  }, [addMessage, errors.username?.message, errors.password?.message]);
+
+  useEffect(() => {
+    if (loginError) {
+      addMessage({ content: loginError, variety: "error" });
+    }
+  }, [loginError, addMessage]);
 
   return (
     <LoginForm onSubmit={handleSubmit(handleLogin)}>
@@ -123,7 +150,10 @@ function UserData() {
         placeholder="korisničko ime"
         {...register("username", {
           required: true,
-          minLength: { value: 2, message: "Prekratko. Najmanje 2 karaktera." },
+          minLength: {
+            value: 2,
+            message: "Korisničko ime mora imati najmanje 2 karaktera.",
+          },
         })}
       />
       <LoginInput
@@ -131,7 +161,10 @@ function UserData() {
         placeholder="lozinka"
         {...register("password", {
           required: true,
-          minLength: { value: 2, message: "Prekratko. Najmanje 2 karaktera." },
+          minLength: {
+            value: 6,
+            message: "Lozinka mora imati najmanje 6 karaktera.",
+          },
         })}
       />
       <ButtonContainer
@@ -153,6 +186,7 @@ function UserData() {
       >
         Nazad
       </ButtonContainer>
+      <DevTool control={control} />
     </LoginForm>
   );
 }

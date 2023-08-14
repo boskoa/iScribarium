@@ -1,10 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = "/api/login";
 
 const initialState = {
-  user: null,
+  author: null,
   loading: false,
   error: null,
 };
@@ -26,10 +30,11 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     alreadyLogged: (state, action) => {
-      state.user = action.payload;
+      state.author = action.payload;
     },
     logout: (state) => {
-      state.user = null;
+      window.localStorage.removeItem("loggedIScribariumAuthor");
+      state.author = null;
     },
   },
   extraReducers: (builder) => {
@@ -41,17 +46,18 @@ const loginSlice = createSlice({
       .addCase(loginAuthor.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.user = action.payload;
+        state.author = action.payload;
       })
       .addCase(loginAuthor.rejected, (state, action) => {
         state.loading = false;
+        console.log("SLAJS ERROR", action.error.message);
         state.error = action.error.message;
       });
   },
 });
 
 export function selectLoggedAuthor(state) {
-  return state.login.user;
+  return state.login.author;
 }
 
 export function selectLoginLoading(state) {
@@ -61,6 +67,8 @@ export function selectLoginLoading(state) {
 export function selectLoginError(state) {
   return state.login.error;
 }
+
+export const selectId = createSelector([selectLoggedAuthor], (a) => a?.id);
 
 export const { alreadyLogged, logout } = loginSlice.actions;
 

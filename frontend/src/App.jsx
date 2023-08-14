@@ -8,7 +8,8 @@ import {
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import { alreadyLogged } from "./features/authors/loginSlice";
+import { alreadyLogged } from "./features/login/loginSlice";
+import Assistant from "./components/Assistant";
 
 const Login = lazy(() => import("./components/Login"));
 
@@ -52,6 +53,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Assistant />
     </>
   );
 }

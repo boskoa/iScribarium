@@ -11,8 +11,6 @@ const components = {
         maxWidth: "100%",
         minWidth: 180,
         maxHeight: 400,
-        boxShadow: "0 0 5px 0 grey",
-        border: "1px solid grey",
       }}
     />
   ),
@@ -21,7 +19,8 @@ const components = {
       style={{
         maxWidth: 300,
         float: "right",
-        border: "1px solid gray",
+        border: "2px solid rgba(0, 0, 0, 0.7)",
+        borderRadius: "7px",
         margin: "5px 5px 0 10px ",
         padding: 5,
         fontSize: 12,
@@ -95,7 +94,7 @@ Za Plotina, svemir je jedinstveno biće kojim vlada simpatija (simpatheia), saos
 `;
 
   return (
-    <div>
+    <div style={{ margin: 20 }}>
       <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
         {text}
       </ReactMarkdown>
