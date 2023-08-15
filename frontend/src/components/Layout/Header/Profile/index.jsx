@@ -14,7 +14,7 @@ const IconContainer = styled.div`
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  padding: 6px;
+  padding: 3px;
   box-shadow: ${({ $show }) => !$show && "0 0 10px 0 rgba(100, 250, 100, 1)"};
   transition: all 0.3s;
   cursor: pointer;

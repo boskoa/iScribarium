@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 import Bubble from "./Bubble";
 import Whale from "./Whale";
+import Search from "./Search";
 
 const MainContainer = styled.main`
   min-width: 320px;
@@ -23,6 +24,7 @@ function Layout() {
   return (
     <MainContainer>
       <Header />
+      <Search />
       <Nav />
       <Footer />
       <OutletContainer>

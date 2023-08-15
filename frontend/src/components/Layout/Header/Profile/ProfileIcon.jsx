@@ -1,8 +1,8 @@
 function ProfileIcon() {
   return (
     <svg
-      width="23.694mm"
-      height="32.32mm"
+      width="100%"
+      height="100%"
       version="1.1"
       viewBox="0 0 23.694 32.32"
       xmlns="http://www.w3.org/2000/svg"
