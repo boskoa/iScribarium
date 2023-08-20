@@ -50,7 +50,6 @@ const loginSlice = createSlice({
       })
       .addCase(loginAuthor.rejected, (state, action) => {
         state.loading = false;
-        console.log("SLAJS ERROR", action.error.message);
         state.error = action.error.message;
       });
   },

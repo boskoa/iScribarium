@@ -10,8 +10,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import { alreadyLogged } from "./features/login/loginSlice";
 import Assistant from "./components/Assistant";
+import { getAllArticles } from "./features/articles/articlesSlice";
 
 const Login = lazy(() => import("./components/Login"));
+const NewArticle = lazy(() => import("./components/NewArticle"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +37,14 @@ function App() {
           index: true,
           element: <HomePage />,
         },
+        {
+          path: "new-article",
+          element: (
+            <Suspense fallback="Loading">
+              <NewArticle />
+            </Suspense>
+          ),
+        },
       ],
     },
   ]);
@@ -48,6 +58,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllAuthors(""));
+    dispatch(getAllArticles(""));
   }, [dispatch]);
 
   return (

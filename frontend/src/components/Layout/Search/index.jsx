@@ -1,32 +1,80 @@
 import { styled } from "styled-components";
 import SearchIcon from "./SearchIcon";
+import { useEffect, useRef, useState } from "react";
+import SearchInput from "./SearchInput";
 
-const SearchContainer = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 60px;
   right: 10px;
-  border-radius: 50%;
+  border-radius: 15px;
   width: 30px;
   height: 30px;
   padding: 3px;
-  box-shadow: 0 0 10px 0 rgba(100, 250, 100, 1);
-  transition: all 0.3s;
+  border: ${({ $showSearch }) =>
+    $showSearch ? "2px solid transparent" : "2px solid black"};
+  transition: all 0.1s;
   cursor: pointer;
+  z-index: 6;
 
   &:active {
-    box-shadow: none;
     transform: scale(0.95);
   }
 `;
 
 function Search() {
+  const [showSearch, setShowSearch] = useState(false);
+  const [term, setTerm] = useState("");
+  const searchRef = useRef(null);
+
+  function handleSearch() {
+    if (!term) {
+      setShowSearch((p) => !p);
+    } else {
+      console.log("SEARCH FOR", term);
+      setTerm("");
+    }
+  }
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSearch(false);
+        setTerm("");
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    function handleEnter(e) {
+      if (showSearch && term && e.key === "Enter") {
+        console.log(e.target.value);
+        setShowSearch(false);
+        setTerm("");
+      }
+    }
+
+    document.addEventListener("keypress", handleEnter);
+
+    return () => document.removeEventListener("keypress", handleEnter);
+  }, [showSearch, term]);
+
   return (
-    <SearchContainer>
+    <StyledContainer
+      ref={searchRef}
+      $showSearch={showSearch}
+      onClick={handleSearch}
+    >
       <SearchIcon />
-    </SearchContainer>
+      <SearchInput showSearch={showSearch} term={term} setTerm={setTerm} />
+    </StyledContainer>
   );
 }
 

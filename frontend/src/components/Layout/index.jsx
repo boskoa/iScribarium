@@ -26,7 +26,6 @@ function Layout() {
       <Header />
       <Search />
       <Nav />
-      <Footer />
       <OutletContainer>
         <Bubble />
         <Bubble />
@@ -35,6 +34,7 @@ function Layout() {
         <Whale />
         <Outlet />
       </OutletContainer>
+      <Footer />
     </MainContainer>
   );
 }

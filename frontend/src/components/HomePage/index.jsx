@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import Proba from "../Layout/Proba";
 
 function HomePage() {
+  /*
   useEffect(() => {
     function moveBg() {
       const position = document.getElementById("home");
@@ -13,7 +13,7 @@ function HomePage() {
 
     return () => document.removeEventListener("scroll", moveBg);
   }, []);
-
+*/
   return (
     <div id="home">
       <Proba />

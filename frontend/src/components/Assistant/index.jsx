@@ -12,7 +12,7 @@ const MainAssistantContainer = styled.div`
   width: 300px;
   margin-top: -260px;
   overflow-x: hidden;
-  z-index: 4;
+  z-index: ${({ $message }) => ($message ? 4 : -1)};
 `;
 
 const enterAssistant = keyframes`
@@ -50,7 +50,7 @@ function Assistant() {
   const message = useSelector(selectMessage);
 
   return (
-    <MainAssistantContainer>
+    <MainAssistantContainer $message={message.content}>
       {message?.content && (
         <AssistantContainer id="robotko">
           <SpeechBubble />

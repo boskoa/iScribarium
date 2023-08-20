@@ -68,7 +68,7 @@ function Robotko() {
             dur="0.5s"
             from="none"
             fill="freeze"
-            to={message?.variety === "error" ? "#f00" : "none"}
+            to={message?.variety === "error" ? "#f00" : "#000"}
           />
         </circle>
         <circle cx="21.095" cy="17.727" r=".63307">
@@ -86,7 +86,7 @@ function Robotko() {
             dur="0.5s"
             from="none"
             fill="freeze"
-            to={message?.variety === "error" ? "#f00" : "none"}
+            to={message?.variety === "error" ? "#f00" : "#000"}
           />
         </circle>
       </g>

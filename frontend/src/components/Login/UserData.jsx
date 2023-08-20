@@ -122,7 +122,6 @@ function UserData() {
 
   useEffect(() => {
     if (loggedAuthor) {
-      console.log("LOADING", loggedAuthor);
       addMessage({ content: "Uspešna prijava", variety: "success" });
       navigate(-1);
     }

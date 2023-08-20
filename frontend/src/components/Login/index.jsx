@@ -1,9 +1,5 @@
 import { styled } from "styled-components";
 import UserData from "./UserData";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectId } from "../../features/login/loginSlice";
-import { useNavigate } from "react-router-dom";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -14,15 +10,6 @@ const LoginContainer = styled.div`
 `;
 
 function Login() {
-  const authorLogged = useSelector(selectId);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authorLogged) {
-      navigate(-1);
-    }
-  }, [authorLogged, navigate]);
-
   return (
     <LoginContainer>
       <UserData />
