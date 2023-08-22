@@ -5,13 +5,16 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "/api/articles";
+export const BASE_URL = "/api/articles";
 
-const articlesAdapter = createEntityAdapter();
+const articlesAdapter = createEntityAdapter({
+  sortComparer: (a, b) => b.id - a.id,
+});
 
 const initialState = articlesAdapter.getInitialState({
   loading: false,
   error: null,
+  lastCreated: null,
 });
 
 export const getAllArticles = createAsyncThunk(
@@ -26,7 +29,6 @@ export const addNewArticle = createAsyncThunk(
   "articles/addNewArticle",
   async (data) => {
     const { newData, token } = data;
-    console.log("NEWDATA", newData);
     const config = {
       headers: {
         Authorization: `bearer ${token}`,
@@ -37,10 +39,32 @@ export const addNewArticle = createAsyncThunk(
   },
 );
 
+export const editArticle = createAsyncThunk(
+  "articles/editArticle",
+  async (data) => {
+    const { newData, token } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(
+      `${BASE_URL}/${newData.id}`,
+      newData,
+      config,
+    );
+    return response.data;
+  },
+);
+
 const articlesSlice = createSlice({
   name: "articles",
   initialState,
-  reducers: {},
+  reducers: {
+    resetLastCreated: (state) => {
+      state.lastCreated = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllArticles.pending, (state) => {
@@ -64,8 +88,23 @@ const articlesSlice = createSlice({
         state.error = null;
         state.loading = false;
         articlesAdapter.upsertOne(state, action.payload);
+        state.lastCreated = action.payload.id;
       })
       .addCase(addNewArticle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(editArticle.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(editArticle.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        articlesAdapter.upsertOne(state, action.payload);
+        state.lastCreated = action.payload.id;
+      })
+      .addCase(editArticle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
@@ -85,5 +124,11 @@ export function selectArticlesError(state) {
 export function selectArticlesLoading(state) {
   return state.articles.loading;
 }
+
+export function selectLastArticle(state) {
+  return state.articles.lastCreated;
+}
+
+export const { resetLastCreated } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

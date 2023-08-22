@@ -63,7 +63,11 @@ router.get("/:id", async (req, res, next) => {
         { model: Author, attributes: { exclude: "passwordHash" } },
       ],
     });
-    return res.status(200).json(article);
+    if (article) {
+      return res.status(200).json(article);
+    } else {
+      return res.status(404).json({ error: "Article was not found" });
+    }
   } catch (error) {
     next(error);
   }
@@ -110,7 +114,7 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
 
   try {
     const newData = { ...req.body };
-    if (newData.categories) {
+    if (newData.categories?.length > 0) {
       await Article_Category.destroy({ where: { articleId: article.id } });
       for (const name of newData.categories) {
         let category = await Category.findOne({ where: { name } });

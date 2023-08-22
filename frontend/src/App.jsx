@@ -14,6 +14,8 @@ import { getAllArticles } from "./features/articles/articlesSlice";
 
 const Login = lazy(() => import("./components/Login"));
 const NewArticle = lazy(() => import("./components/NewArticle"));
+const ArticlePage = lazy(() => import("./components/ArticlePage"));
+const EditArticle = lazy(() => import("./components/EditArticle"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -42,6 +44,22 @@ function App() {
           element: (
             <Suspense fallback="Loading">
               <NewArticle />
+            </Suspense>
+          ),
+        },
+        {
+          path: "articles/:id",
+          element: (
+            <Suspense fallback="Loading">
+              <ArticlePage />
+            </Suspense>
+          ),
+        },
+        {
+          path: "edit-article/:id",
+          element: (
+            <Suspense fallback="Loading">
+              <EditArticle />
             </Suspense>
           ),
         },

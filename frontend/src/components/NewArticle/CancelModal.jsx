@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { Button } from "./NewArticleForm";
 
 const ModalContainer = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  top: -70px;
-  left: -10px;
+  top: 0px;
+  left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 200;
   transform: translateY(${({ $height }) => $height}px);
@@ -24,30 +22,47 @@ const Modal = styled.div`
   padding: 20px;
 `;
 
-function CancelModal() {
-  const [height, setHeight] = useState(0);
+const ModalButton = styled.button`
+  background-color: ${({ $bg }) => $bg};
+  border: 3px solid black;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
 
-  useEffect(() => {
-    function changeHeight() {
-      const top = window.scrollY;
-      setHeight(top);
-    }
+  &:hover {
+    border-color: yellow;
+  }
 
-    document.addEventListener("scroll", changeHeight);
+  &:active {
+    transform: scale(0.95);
+  }
+  width: 50px;
+  float: ${({ $float }) => $float};
+`;
 
-    return () => document.removeEventListener("scroll", changeHeight);
-  }, []);
+function CancelModal({ setShowModal, reset }) {
+  function handleCancel() {
+    setShowModal(false);
+    reset();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   return (
-    <ModalContainer id="modal" $height={height}>
+    <ModalContainer id="modal">
       <Modal>
         <p style={{ marginBottom: "10px" }}>Sigurno želiš da poništiš unos?</p>
-        <Button $bg="green" style={{ width: "50px", float: "left" }}>
+        <ModalButton
+          $bg="green"
+          $float="left"
+          onClick={() => setShowModal(false)}
+        >
           Ne
-        </Button>
-        <Button $bg="green" style={{ width: "50px", float: "right" }}>
+        </ModalButton>
+        <ModalButton $bg="green" $float="right" onClick={handleCancel}>
           Da
-        </Button>
+        </ModalButton>
       </Modal>
     </ModalContainer>
   );

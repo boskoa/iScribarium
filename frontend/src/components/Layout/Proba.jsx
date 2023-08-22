@@ -49,7 +49,7 @@ const components = {
 function Proba() {
   const text = `# Svemir
 
-|   |
+|     |
 |:---:|
 |![Habl slika svemira](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hubble_ultra_deep_field.jpg/800px-Hubble_ultra_deep_field.jpg)|
 |Slika svemira|

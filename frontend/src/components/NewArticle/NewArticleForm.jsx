@@ -4,22 +4,26 @@ import { DevTool } from "@hookform/devtools";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedAuthor } from "../../features/login/loginSlice";
 import useTimedMessage from "../../customHooks/useTimedMessage";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addNewArticle,
   selectArticlesError,
+  selectLastArticle,
 } from "../../features/articles/articlesSlice";
+import CancelModal from "./CancelModal";
+import { useNavigate } from "react-router-dom";
 
-const StyledNewArticleForm = styled.form`
+export const StyledNewArticleForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: stretch;
   max-width: 600px;
   gap: 20px;
+  flex: 2;
 `;
 
-const TitleInput = styled.input`
+export const TitleInput = styled.input`
   max-width: 280px;
   background-color: rgba(0, 0, 0, 0.2);
   height: 30px;
@@ -32,7 +36,7 @@ const TitleInput = styled.input`
   }
 `;
 
-const ContentInput = styled.textarea`
+export const ContentInput = styled.textarea`
   max-width: 600px;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 3px;
@@ -53,6 +57,14 @@ export const Button = styled.button`
   color: white;
   padding: 5px;
   cursor: pointer;
+
+  &:hover {
+    border-color: yellow;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 function NewArticleForm() {
@@ -62,6 +74,9 @@ function NewArticleForm() {
   const addMessage = useTimedMessage();
   const dispatch = useDispatch();
   const articlesRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+  const newId = useSelector(selectLastArticle);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -74,18 +89,17 @@ function NewArticleForm() {
   function handleCreateArticle(data) {
     if (loggedAuthor) {
       const newData = { ...data, authorId: loggedAuthor.id };
-      console.log("NEW ARTICLE", { newData, token: loggedAuthor.token });
       dispatch(addNewArticle({ newData, token: loggedAuthor.token }));
     } else {
-      console.log("BAR");
       addMessage({
         content: "Samo prijavljeni autori mogu praviti članke",
         variety: "error",
       });
     }
   }
+
   function handleCancel() {
-    console.log("CANCELING");
+    setShowModal(true);
   }
 
   useEffect(() => {
@@ -115,10 +129,9 @@ function NewArticleForm() {
       });
       articlesRef.current = articlesLength;
       reset();
-      //redirekt na stranicu sa člankom
+      setTimeout(() => navigate(`/articles/${newId}`), 7000);
     }
-    console.log("REF", articlesLength, articlesRef.current);
-  }, [addMessage, articlesLength, reset]);
+  }, [addMessage, articlesLength, reset, navigate, newId]);
 
   return (
     <StyledNewArticleForm onSubmit={handleSubmit(handleCreateArticle)}>
@@ -147,10 +160,11 @@ function NewArticleForm() {
       <Button $bg="red" type="button" onClick={handleCancel}>
         Poništi
       </Button>
-      <Button $bg="lime" type="submit">
+      <Button $bg="green" type="submit">
         Sačuvaj
       </Button>
       <DevTool control={control} />
+      {showModal && <CancelModal setShowModal={setShowModal} reset={reset} />}
     </StyledNewArticleForm>
   );
 }
