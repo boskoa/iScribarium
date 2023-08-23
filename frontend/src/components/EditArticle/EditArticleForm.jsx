@@ -7,18 +7,22 @@ import { useEffect, useMemo, useState } from "react";
 import {
   BASE_URL,
   editArticle,
+  resetDeleted,
   resetLastCreated,
   selectArticlesError,
+  selectDeletedArticle,
   selectLastArticle,
 } from "../../features/articles/articlesSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
+  CategoriesInput,
   ContentInput,
   StyledNewArticleForm,
   TitleInput,
 } from "../NewArticle/NewArticleForm";
 import axios from "axios";
+import DeleteModal from "./DeleteModal";
 
 function EditArticleForm() {
   const { id } = useParams();
@@ -29,6 +33,8 @@ function EditArticleForm() {
   const dispatch = useDispatch();
   const newId = useSelector(selectLastArticle);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const articleDeleted = useSelector(selectDeletedArticle);
 
   const {
     register,
@@ -39,13 +45,21 @@ function EditArticleForm() {
   } = useForm({
     mode: "onBlur",
     defaultValues: useMemo(() => {
-      const values = { title: article?.title, content: article?.content };
+      const values = {
+        title: article?.title,
+        content: article?.content,
+        categories: article?.categories?.map((c) => c.name).join(", "),
+      };
       return values;
     }, [article]),
   });
 
   function handleEditArticle(data) {
-    if (data.title === article.title && data.content === article.content) {
+    if (
+      data.title === article.title &&
+      data.content === article.content &&
+      JSON.stringify(data.categories) === JSON.stringify(article.categories)
+    ) {
       addMessage({
         content: "Ništa nije izmenjeno",
         variety: "error",
@@ -54,11 +68,16 @@ function EditArticleForm() {
     }
     if (loggedAuthor && loggedAuthor.id === article.authorId) {
       const newData = {
-        id: data.id,
+        id: article.id,
         title: data.title,
         content: data.content,
         authorId: loggedAuthor.id,
-      }; // dodati i kategorije kad se naprave
+        categories: data.categories?.length
+          ? data.categories
+              .split(", ")
+              .map((c) => c[0].toUpperCase() + c.slice(1))
+          : [],
+      };
       dispatch(editArticle({ newData, token: loggedAuthor.token }));
     } else {
       addMessage({
@@ -69,12 +88,15 @@ function EditArticleForm() {
   }
 
   useEffect(() => {
-    dispatch(resetLastCreated());
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [dispatch]);
 
   useEffect(() => {
-    reset(article);
+    reset({
+      title: article?.title,
+      content: article?.content,
+      categories: article?.categories?.map((c) => c.name).join(", "),
+    });
   }, [article, reset]);
 
   useEffect(() => {
@@ -84,11 +106,12 @@ function EditArticleForm() {
         setArticle(response.data);
       } catch (error) {
         addMessage({ content: error.response.data.error, variety: "error" });
-        setTimeout(() => navigate(-1), 6000);
+        //setTimeout(() => navigate(-1), 6000);
       }
     }
-
-    getArticle();
+    if (id) {
+      getArticle();
+    }
   }, [id, addMessage, navigate]);
 
   useEffect(() => {
@@ -112,10 +135,20 @@ function EditArticleForm() {
         content: "Članak je uspešno izmenjen",
         variety: "success",
       });
-      reset();
-      setTimeout(() => navigate(`/articles/${newId}`), 7000);
+      setTimeout(() => {
+        navigate(`/articles/${newId}`);
+        dispatch(resetLastCreated());
+      }, 7000);
     }
-  }, [addMessage, reset, navigate, newId]);
+  }, [addMessage, reset, navigate, newId, dispatch]);
+
+  useEffect(() => {
+    if (articleDeleted) {
+      navigate("/");
+      addMessage({ content: "Članak je obrisan", variety: "success" });
+      setTimeout(() => dispatch(resetDeleted()), 7000);
+    }
+  }, [articleDeleted, navigate, dispatch, addMessage]);
 
   return (
     <StyledNewArticleForm onSubmit={handleSubmit(handleEditArticle)}>
@@ -141,12 +174,21 @@ function EditArticleForm() {
           },
         })}
       />
-      <Button $bg="red" type="button" onClick={() => navigate(-1)}>
+      <CategoriesInput
+        type="text"
+        placeholder="Kategorije"
+        {...register("categories")}
+      />
+      <Button $bg="blue" type="button" onClick={() => navigate(-1)}>
         Poništi
       </Button>
       <Button $bg="green" type="submit">
         Sačuvaj
       </Button>
+      <Button $bg="red" type="button" onClick={() => setShowModal(true)}>
+        Obriši
+      </Button>
+      {showModal && <DeleteModal setShowModal={setShowModal} id={id} />}
       <DevTool control={control} />
     </StyledNewArticleForm>
   );

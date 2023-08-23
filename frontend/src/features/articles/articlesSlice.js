@@ -15,6 +15,7 @@ const initialState = articlesAdapter.getInitialState({
   loading: false,
   error: null,
   lastCreated: null,
+  deleted: null,
 });
 
 export const getAllArticles = createAsyncThunk(
@@ -28,13 +29,17 @@ export const getAllArticles = createAsyncThunk(
 export const addNewArticle = createAsyncThunk(
   "articles/addNewArticle",
   async (data) => {
-    const { newData, token } = data;
+    const { newData, categories, token } = data;
     const config = {
       headers: {
         Authorization: `bearer ${token}`,
       },
     };
-    const response = await axios.post(BASE_URL, { article: newData }, config);
+    const response = await axios.post(
+      BASE_URL,
+      { article: newData, categories },
+      config,
+    );
     return response.data;
   },
 );
@@ -57,12 +62,29 @@ export const editArticle = createAsyncThunk(
   },
 );
 
+export const deleteArticle = createAsyncThunk(
+  "articles/deleteArticle",
+  async (data) => {
+    const { id, token } = data;
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.delete(`${BASE_URL}/${id}`, config);
+    return response.data;
+  },
+);
+
 const articlesSlice = createSlice({
   name: "articles",
   initialState,
   reducers: {
     resetLastCreated: (state) => {
       state.lastCreated = null;
+    },
+    resetDeleted: (state) => {
+      state.deleted = null;
     },
   },
   extraReducers: (builder) => {
@@ -107,6 +129,20 @@ const articlesSlice = createSlice({
       .addCase(editArticle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(deleteArticle.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(deleteArticle.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        articlesAdapter.removeOne(state, action.payload);
+        state.deleted = action.payload;
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -129,6 +165,10 @@ export function selectLastArticle(state) {
   return state.articles.lastCreated;
 }
 
-export const { resetLastCreated } = articlesSlice.actions;
+export function selectDeletedArticle(state) {
+  return state.articles.deleted;
+}
+
+export const { resetLastCreated, resetDeleted } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

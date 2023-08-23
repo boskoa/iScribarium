@@ -7,6 +7,7 @@ import useTimedMessage from "../../customHooks/useTimedMessage";
 import { useEffect, useRef, useState } from "react";
 import {
   addNewArticle,
+  resetLastCreated,
   selectArticlesError,
   selectLastArticle,
 } from "../../features/articles/articlesSlice";
@@ -24,7 +25,7 @@ export const StyledNewArticleForm = styled.form`
 `;
 
 export const TitleInput = styled.input`
-  max-width: 280px;
+  max-width: 600px;
   background-color: rgba(0, 0, 0, 0.2);
   height: 30px;
   padding: 3px;
@@ -47,6 +48,10 @@ export const ContentInput = styled.textarea`
   &:focus {
     outline: 2px solid red;
   }
+`;
+
+export const CategoriesInput = styled(TitleInput)`
+  max-width: 600px;
 `;
 
 export const Button = styled.button`
@@ -88,8 +93,22 @@ function NewArticleForm() {
 
   function handleCreateArticle(data) {
     if (loggedAuthor) {
-      const newData = { ...data, authorId: loggedAuthor.id };
-      dispatch(addNewArticle({ newData, token: loggedAuthor.token }));
+      const newData = {
+        ...data,
+        authorId: loggedAuthor.id,
+      };
+      console.log("NEWDATA", newData);
+      dispatch(
+        addNewArticle({
+          newData,
+          categories: data.categories?.length
+            ? data.categories
+                .split(", ")
+                .map((c) => c[0].toUpperCase() + c.slice(1))
+            : [],
+          token: loggedAuthor.token,
+        }),
+      );
     } else {
       addMessage({
         content: "Samo prijavljeni autori mogu praviti članke",
@@ -129,9 +148,12 @@ function NewArticleForm() {
       });
       articlesRef.current = articlesLength;
       reset();
-      setTimeout(() => navigate(`/articles/${newId}`), 7000);
+      setTimeout(() => {
+        navigate(`/articles/${newId}`);
+        dispatch(resetLastCreated());
+      }, 7000);
     }
-  }, [addMessage, articlesLength, reset, navigate, newId]);
+  }, [addMessage, articlesLength, reset, navigate, newId, dispatch]);
 
   return (
     <StyledNewArticleForm onSubmit={handleSubmit(handleCreateArticle)}>
@@ -156,6 +178,11 @@ function NewArticleForm() {
             message: "Sadržaj članka mora imati najmanje 10 karaktera.",
           },
         })}
+      />
+      <CategoriesInput
+        type="text"
+        placeholder="Kategorije"
+        {...register("categories")}
       />
       <Button $bg="red" type="button" onClick={handleCancel}>
         Poništi

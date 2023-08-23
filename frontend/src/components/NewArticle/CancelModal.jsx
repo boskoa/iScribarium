@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
@@ -14,7 +14,7 @@ const ModalContainer = styled.div`
   transform: translateY(${({ $height }) => $height}px);
 `;
 
-const Modal = styled.div`
+export const Modal = styled.div`
   background-color: teal;
   border: 3px solid black;
   border-radius: 8px;
@@ -22,7 +22,7 @@ const Modal = styled.div`
   padding: 20px;
 `;
 
-const ModalButton = styled.button`
+export const ModalButton = styled.button`
   background-color: ${({ $bg }) => $bg};
   border: 3px solid black;
   border-radius: 8px;

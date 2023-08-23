@@ -108,6 +108,13 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
     return res.status(401).json({ error: "Missing token" });
   }
 
+  if (author.username !== "seco") {
+    //promeniti u iskra
+    return res
+      .status(401)
+      .json({ error: "Server says: Only Iskra can edit articles. For now." });
+  }
+
   if (!req.body) {
     return res.status(401).json({ error: "Nothing to change" });
   }
@@ -144,13 +151,20 @@ router.delete("/:id", tokenExtractor, async (req, res, next) => {
     return res.status(401).json({ error: "Missing token" });
   }
 
+  if (author.username !== "seco") {
+    //promeniti u iskra
+    return res
+      .status(401)
+      .json({ error: "Server says: Only Iskra can edit articles. For now." });
+  }
+
   if (article.categories?.length) {
     await Article_Category.destroy({ where: { articleId: article.id } });
   }
 
   try {
     await article.destroy();
-    return res.status(200).send(`Article with the id ${req.params.id} deleted`);
+    return res.status(200).send(req.params.id);
   } catch (error) {
     next(error);
   }

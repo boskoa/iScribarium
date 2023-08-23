@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { BASE_URL } from "../../features/articles/articlesSlice";
 import useTimedMessage from "../../customHooks/useTimedMessage";
 import { styled } from "styled-components";
+import EditArticleIcon from "./EditArticleIcon";
 
 const components = {
   img: ({ alt, src, title }) => (
@@ -90,6 +91,7 @@ function ArticlePage() {
       <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
         {article?.content}
       </ReactMarkdown>
+      <EditArticleIcon articleId={id} />
     </ArticleContainer>
   );
 }
