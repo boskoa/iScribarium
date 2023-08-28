@@ -5,26 +5,31 @@
   font-family: 'Fuzzy Bubbles', sans-serif;
 }
 
-body {
+.scroll {
   background-color: rgb(159, 236, 236);
   min-width: 320px;
 }
 
-body::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
   width: 10px;
 }
 
-body::-webkit-scrollbar-track {
+.scroll::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.1)
 }
 
-body::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
   background-color: rgb(20, 221, 20);
   border-radius: 1px;
   border: 3px solid black
 }
 
-body::-webkit-scrollbar-button {
+.scrollInput::-webkit-scrollbar-thumb {
+  border: 1px solid black;
+  border-right: none;
+}
+
+.scroll::-webkit-scrollbar-button {
   color: gray;
   background-color: black;
 }

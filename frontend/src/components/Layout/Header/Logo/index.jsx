@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import LogoImage from "./LogoImage";
+import { useNavigate } from "react-router-dom";
 
 const LogoContainer = styled.div`
   display: flex;
@@ -12,8 +13,10 @@ const LogoContainer = styled.div`
 `;
 
 function Logo() {
+  const navigate = useNavigate();
+
   return (
-    <LogoContainer>
+    <LogoContainer onClick={() => navigate("/")}>
       <LogoImage />
     </LogoContainer>
   );

@@ -37,12 +37,14 @@ const components = {
     />
   ),
   a: (props) => <a {...props} style={{ textDecoration: "none" }} />,
-  p: (props) => <p {...props} style={{ textAlign: "justify" }} />,
+  p: (props) => (
+    <p {...props} style={{ textAlign: "justify", marginBottom: 15 }} />
+  ),
   h2: (props) => (
     <h2
       {...props}
       style={{
-        margin: "15px 0px 10px 0px",
+        margin: "0px 0px 10px 0px",
         display: "inline-block",
         position: "relative",
         borderBottom: "2px solid rgba(50, 50, 100, 0.3)",
@@ -57,7 +59,7 @@ const ArticleContainer = styled.div`
   margin: 20px;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
@@ -84,7 +86,7 @@ function ArticlePage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-  // izmeni dugme i stranica za izmenu; na njoj i dugme za brisanje
+
   return (
     <ArticleContainer>
       <Title>{article?.title}</Title>

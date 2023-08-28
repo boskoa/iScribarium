@@ -16,6 +16,8 @@ const Login = lazy(() => import("./components/Login"));
 const NewArticle = lazy(() => import("./components/NewArticle"));
 const ArticlePage = lazy(() => import("./components/ArticlePage"));
 const EditArticle = lazy(() => import("./components/EditArticle"));
+const SearchResults = lazy(() => import("./components/SearchResults"));
+const Authors = lazy(() => import("./components/Authors"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -60,6 +62,22 @@ function App() {
           element: (
             <Suspense fallback="Loading">
               <EditArticle />
+            </Suspense>
+          ),
+        },
+        {
+          path: "searched/:title",
+          element: (
+            <Suspense fallback="Loading">
+              <SearchResults />
+            </Suspense>
+          ),
+        },
+        {
+          path: "authors",
+          element: (
+            <Suspense fallback="Loading">
+              <Authors />
             </Suspense>
           ),
         },

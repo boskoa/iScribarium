@@ -23,7 +23,7 @@ const SearchComponent = styled.input`
   border-radius: 10px;
   margin-left: 10px;
   background-color: transparent;
-  padding: 2px;
+  padding: 2px 5px;
   font-size: 12px;
 `;
 

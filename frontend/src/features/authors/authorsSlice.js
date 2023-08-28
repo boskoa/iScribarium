@@ -25,7 +25,12 @@ export const getAllAuthors = createAsyncThunk(
 const authorsSlice = createSlice({
   name: "authors",
   initialState,
-  reducers: {},
+  reducers: {
+    resetAuthors: (state) => {
+      state.ids = [];
+      state.entities = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllAuthors.pending, (state) => {
@@ -57,5 +62,7 @@ export function selectAuthorsLoading(state) {
 export function selectAuthorsError(state) {
   return state.authors.error;
 }
+
+export const { resetAuthors } = authorsSlice.actions;
 
 export default authorsSlice.reducer;

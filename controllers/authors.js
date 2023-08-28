@@ -1,4 +1,4 @@
-const { Author } = require("../models");
+const { Author, Article } = require("../models");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const { tokenExtractor } = require("../utils/tokenExtractor");
@@ -25,6 +25,7 @@ router.get("/", async (req, res, next) => {
       order,
       ...pagination,
       attributes: { exclude: ["passwordHash"] },
+      include: Article,
     });
     return res.status(200).json(authors);
   } catch (error) {

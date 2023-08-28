@@ -164,6 +164,7 @@ function EditArticleForm() {
         })}
       />
       <ContentInput
+        className="scroll scrollInput"
         rows="45"
         placeholder="Sadržaj članka"
         {...register("content", {
