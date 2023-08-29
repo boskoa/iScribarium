@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import UserData from "./UserData";
 
-const LoginContainer = styled.div`
+export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 15vh;

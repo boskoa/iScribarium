@@ -18,6 +18,7 @@ const ArticlePage = lazy(() => import("./components/ArticlePage"));
 const EditArticle = lazy(() => import("./components/EditArticle"));
 const SearchResults = lazy(() => import("./components/SearchResults"));
 const Authors = lazy(() => import("./components/Authors"));
+const Register = lazy(() => import("./components/Register"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,14 @@ function App() {
       element: (
         <Suspense fallback="Loading...">
           <Login />
+        </Suspense>
+      ),
+    },
+    {
+      path: "register",
+      element: (
+        <Suspense fallback="Loading...">
+          <Register />
         </Suspense>
       ),
     },

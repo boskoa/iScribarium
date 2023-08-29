@@ -18,13 +18,24 @@ const NavContainer = styled.nav`
   border-radius: 0px 5px 5px 0px;
   box-shadow: 0 0 0 3px black;
   color: white;
-  z-index: 10;
+  z-index: 3;
   overflow: hidden;
   transform: translateX(-45px);
   transition: all 0.5s;
 
   &:hover {
     transform: translateX(0);
+  }
+
+  @media (hover: none) {
+    position: sticky;
+    transform: translateX(0px);
+    top: -6px;
+    left: calc(100% / 2 - 100px);
+    width: 200px;
+    height: 50px;
+    border-radius: 0px 0px 5px 5px;
+    flex-direction: row;
   }
 `;
 

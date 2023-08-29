@@ -69,6 +69,7 @@ router.post("/", async (req, res, next) => {
     const newAuthor = await Author.findOne({
       where: { username: userData.username },
       attributes: { exclude: ["passwordHash"] },
+      include: Article,
     });
     return res.status(200).json(newAuthor);
   } catch (error) {

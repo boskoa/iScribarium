@@ -22,6 +22,14 @@ export const getAllAuthors = createAsyncThunk(
   },
 );
 
+export const createAuthor = createAsyncThunk(
+  "authors/createAuthor",
+  async (data) => {
+    const response = await axios.post(BASE_URL, data);
+    return response.data;
+  },
+);
+
 const authorsSlice = createSlice({
   name: "authors",
   initialState,
@@ -43,6 +51,19 @@ const authorsSlice = createSlice({
         authorsAdapter.upsertMany(state, action.payload);
       })
       .addCase(getAllAuthors.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(createAuthor.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(createAuthor.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        authorsAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(createAuthor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
