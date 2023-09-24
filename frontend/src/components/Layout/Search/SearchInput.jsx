@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { styled } from "styled-components";
 
 const SearchContainer = styled.div`
@@ -27,11 +28,17 @@ const SearchComponent = styled.input`
   font-size: 12px;
 `;
 
-function SearchInput({ showSearch, term, setTerm }) {
+const SearchInput = forwardRef(function SearchInput(
+  { showSearch, term, setTerm },
+  inputRef,
+) {
   return (
     <SearchContainer $showSearch={showSearch}>
       {showSearch && (
         <SearchComponent
+          autoComplete="false"
+          ref={inputRef}
+          name="search"
           onClick={(e) => e.stopPropagation()}
           type="text"
           size={14}
@@ -41,6 +48,6 @@ function SearchInput({ showSearch, term, setTerm }) {
       )}
     </SearchContainer>
   );
-}
+});
 
 export default SearchInput;

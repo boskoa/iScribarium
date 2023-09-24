@@ -62,6 +62,7 @@ function Search() {
   const [showSearch, setShowSearch] = useState(false);
   const [term, setTerm] = useState("");
   const searchRef = useRef(null);
+  const inputRef = useRef(null);
   const [existingArticles, setExistingArticles] = useState(null);
   const navigate = useNavigate();
 
@@ -122,11 +123,22 @@ function Search() {
     }
   }, [term]);
 
+  useEffect(() => {
+    if (showSearch) {
+      inputRef.current.focus();
+    }
+  }, [showSearch]);
+
   return (
     <SearchBlock ref={searchRef}>
       <StyledContainer $showSearch={showSearch} onClick={handleSearch}>
         <SearchIcon />
-        <SearchInput showSearch={showSearch} term={term} setTerm={setTerm} />
+        <SearchInput
+          ref={inputRef}
+          showSearch={showSearch}
+          term={term}
+          setTerm={setTerm}
+        />
       </StyledContainer>
       {Boolean(existingArticles?.length) && (
         <Articles>
