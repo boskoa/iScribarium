@@ -6,8 +6,9 @@
 }
 
 .scroll {
-  background-color: rgb(159, 236, 236);
+  background-color: rgb(145, 213, 244);
   min-width: 320px;
+  transition: all 0.1s;
 }
 
 .scroll::-webkit-scrollbar {
@@ -169,7 +170,7 @@
   content: "";
   width: 100%;
   height: 0;
-  border-bottom: 2px solid teal;
+  border-bottom: 2px solid coral;
   transform: scaleX(0);
   transform-origin: 50%;
   transition: all 0.3s;

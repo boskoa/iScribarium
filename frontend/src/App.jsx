@@ -1,9 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllAuthors,
-  selectAllAuthors,
-} from "./features/authors/authorsSlice";
+import { useDispatch } from "react-redux";
+import { getAllAuthors } from "./features/authors/authorsSlice";
 
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -11,6 +8,8 @@ import HomePage from "./components/HomePage";
 import { alreadyLogged } from "./features/login/loginSlice";
 import Assistant from "./components/Assistant";
 import { getAllArticles } from "./features/articles/articlesSlice";
+import { ThemeProvider } from "styled-components";
+import { dark, light } from "./themes";
 
 const Login = lazy(() => import("./components/Login"));
 const NewArticle = lazy(() => import("./components/NewArticle"));
@@ -21,9 +20,8 @@ const Authors = lazy(() => import("./components/Authors"));
 const Register = lazy(() => import("./components/Register"));
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState("light");
   const dispatch = useDispatch();
-  const authors = useSelector(selectAllAuthors);
 
   const router = createBrowserRouter([
     {
@@ -44,7 +42,7 @@ function App() {
     },
     {
       path: "/",
-      element: <Layout />,
+      element: <Layout handleTheme={handleTheme} />,
       children: [
         {
           index: true,
@@ -94,11 +92,22 @@ function App() {
     },
   ]);
 
+  function handleTheme() {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    window.localStorage.setItem(
+      "iScribariumTheme",
+      theme === "light" ? "dark" : "light",
+    );
+  }
+
   useEffect(() => {
     const loggedAuthor = window.localStorage.getItem("loggedIScribariumAuthor");
     if (loggedAuthor) {
       dispatch(alreadyLogged(JSON.parse(loggedAuthor)));
     }
+
+    const previousTheme = window.localStorage.getItem("iScribariumTheme");
+    setTheme(previousTheme);
   }, [dispatch]);
 
   useEffect(() => {
@@ -106,10 +115,17 @@ function App() {
     dispatch(getAllArticles(""));
   }, [dispatch]);
 
+  useEffect(() => {
+    document.querySelector(".scroll").style.backgroundColor =
+      theme === "dark" ? "rgb(20, 85, 170)" : "rgb(145, 213, 244)";
+  }, [theme]);
+
   return (
     <>
-      <RouterProvider router={router} />
-      <Assistant />
+      <ThemeProvider theme={theme === "light" ? light : dark}>
+        <RouterProvider router={router} />
+        <Assistant />
+      </ThemeProvider>
     </>
   );
 }

@@ -27,6 +27,7 @@ export const StyledNewArticleForm = styled.form`
 export const TitleInput = styled.input`
   max-width: 600px;
   background-color: rgba(0, 0, 0, 0.2);
+  color: ${({ theme }) => theme.main.color};
   height: 30px;
   padding: 3px;
   border: 3px solid black;
@@ -40,6 +41,7 @@ export const TitleInput = styled.input`
 export const ContentInput = styled.textarea`
   max-width: 600px;
   background-color: rgba(0, 0, 0, 0.2);
+  color: ${({ theme }) => theme.main.color};
   padding: 3px;
   border: 3px solid black;
   border-radius: 8px;
@@ -62,6 +64,7 @@ export const Button = styled.button`
   color: white;
   padding: 5px;
   cursor: pointer;
+  transition: all 0.2s;
 
   &:hover {
     border-color: yellow;

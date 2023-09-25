@@ -25,8 +25,8 @@ const StyledContainer = styled.div`
   width: 30px;
   height: 30px;
   padding: 3px;
-  border: ${({ $showSearch }) =>
-    $showSearch ? "2px solid transparent" : "2px solid black"};
+  border: ${({ $showSearch, theme }) =>
+    $showSearch ? "2px solid transparent" : `2px solid ${theme.main.color}`};
   transition: all 0.1s;
   cursor: pointer;
 
@@ -40,7 +40,7 @@ const Articles = styled.ul`
   position: relative;
   bottom: -40px;
   left: 0px;
-  border: 2px solid black;
+  border: 2px solid ${({ theme }) => theme.main.color};
   border-radius: 10px;
   padding: 3px;
   background-color: teal;

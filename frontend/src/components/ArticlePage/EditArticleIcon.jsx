@@ -12,7 +12,8 @@ const IconContainer = styled.div`
   border: 3px solid black;
   border-radius: 50%;
   background-color: yellow;
-  transition: all 0.1s;
+  transition: all 0.3s;
+  z-index: 10;
   cursor: pointer;
 
   &:hover {

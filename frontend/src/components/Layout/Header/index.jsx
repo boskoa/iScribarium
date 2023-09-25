@@ -11,7 +11,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 5px 10px;
-  background-color: rgb(100, 100, 100);
+  background-color: ${({ theme }) => theme.header.bg};
   width: 100%;
   height: 50px;
   will-change: transform;
@@ -20,12 +20,12 @@ const HeaderContainer = styled.header`
   transition: all 0.3s;
 `;
 
-function Header() {
+function Header({ handleTheme }) {
   const head = useAutohideHeader();
 
   return (
     <HeaderContainer ref={head}>
-      <ThemeButton />
+      <ThemeButton handleTheme={handleTheme} />
       <Logo />
       <Profile />
     </HeaderContainer>

@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import MoonIcon from "./MoonIcon";
 
 const IconContainer = styled.div`
@@ -9,7 +9,7 @@ const IconContainer = styled.div`
   width: 30px;
   height: 30px;
   padding: 5px;
-  box-shadow: 0 0 10px 0 yellow;
+  box-shadow: 0 0 10px 0 ${({ theme }) => theme.themeButton.color};
   transition: all 0.3s;
   cursor: pointer;
 
@@ -19,10 +19,12 @@ const IconContainer = styled.div`
   }
 `;
 
-function ThemeButton() {
+function ThemeButton({ handleTheme }) {
+  const theme = useTheme();
+
   return (
-    <IconContainer style={{}}>
-      <MoonIcon fill="yellow" />
+    <IconContainer onClick={handleTheme} style={{}} title="Change theme">
+      <MoonIcon fill={theme.themeButton.color} />
     </IconContainer>
   );
 }

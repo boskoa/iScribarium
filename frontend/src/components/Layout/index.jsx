@@ -10,20 +10,22 @@ import Search from "./Search";
 const MainContainer = styled.main`
   min-width: 320px;
   min-height: 100vh;
+  color: ${({ theme }) => theme.main.color};
   position: relative;
+  transition: all 0.1s;
+  padding-bottom: 5vh;
 `;
 
 const OutletContainer = styled.div`
   min-height: 150vh;
   width: 100%;
-  color: black;
   position: relative;
 `;
 
-function Layout() {
+function Layout({ handleTheme }) {
   return (
     <MainContainer>
-      <Header />
+      <Header handleTheme={handleTheme} />
       <Search />
       <Nav />
       <OutletContainer>

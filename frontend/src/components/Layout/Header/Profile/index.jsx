@@ -35,7 +35,11 @@ const Menu = styled.div`
   border-radius: 50px;
   width: ${({ $show }) => ($show ? "170px" : "30px")};
   height: 30px;
-  background: linear-gradient(to left, transparent 30px, gray 70px);
+  background: linear-gradient(
+    to left,
+    transparent 30px,
+    ${({ theme }) => theme.header.bg} 70px
+  );
   padding: 6px 24px 6px 6px;
   font-size: ${({ $show }) => ($show ? "12px" : "0px")};
   z-index: 5;

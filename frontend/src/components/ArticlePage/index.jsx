@@ -26,7 +26,7 @@ const components = {
       style={{
         maxWidth: 300,
         float: "right",
-        border: "2px solid rgba(0, 0, 0, 0.7)",
+        border: "2px solid rgba(36, 43, 230, 0.3)",
         borderRadius: "7px",
         margin: "5px 5px 0 10px ",
         padding: 5,
@@ -57,6 +57,7 @@ const components = {
 
 const ArticleContainer = styled.div`
   margin: 20px;
+  transition: all 0.1s;
 `;
 
 const Title = styled.h1`

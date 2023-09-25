@@ -12,14 +12,45 @@ import useIntersectionObserver from "../../customHooks/useIntersectionObserver";
 
 const MainContainer = styled.div`
   margin: 40px 10px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Filters = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  padding: 7px;
+  border: 3px solid black;
+  border-radius: 5px;
+  background-color: yellow;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: red;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 const AuthorsContainer = styled.div`
   padding: 10px;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
 `;
 
 const Title = styled.h2``;
@@ -28,18 +59,18 @@ const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
+  height: 60px;
   width: 100%;
-  margin-top: auto;
-  border: 2px solid black;
+  margin-top: 20px;
   z-index: -3;
 `;
 
-const LIMIT = 1; //change later
+const LIMIT = 10; //change later
 
 function Authors() {
   const authors = useSelector(selectAllAuthors);
   const [offset, setOffset] = useState(0);
+  const [filter, setFilter] = useState("");
   const endRef = useRef(null);
   const intersecting = useIntersectionObserver(endRef);
   const [stopLoading, setStopLoading] = useState(false);
@@ -62,18 +93,29 @@ function Authors() {
 
   useEffect(() => {
     if (offset === authors.length) {
-      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}`));
+      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}${filter}`));
     }
-  }, [offset, dispatch, authors.length]);
+  }, [offset, dispatch, authors.length, filter]);
 
   useEffect(() => {
     dispatch(resetAuthors());
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [dispatch]);
+  }, [dispatch, filter]);
 
   return (
     <MainContainer>
       <Title>Autori članaka</Title>
+      <Filters>
+        <ButtonContainer onClick={() => setFilter("&order=name,asc")}>
+          Abecedno
+        </ButtonContainer>
+        <ButtonContainer onClick={() => setFilter("&order=name,desc")}>
+          Broj članaka
+        </ButtonContainer>
+        <ButtonContainer onClick={() => setFilter("&order=id,desc")}>
+          Najnoviji
+        </ButtonContainer>
+      </Filters>
       <AuthorsContainer>
         {authors.map((a) => (
           <Author key={a.id} author={a} />
