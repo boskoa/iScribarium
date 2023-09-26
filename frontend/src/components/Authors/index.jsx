@@ -70,7 +70,8 @@ const LIMIT = 10; //change later
 function Authors() {
   const authors = useSelector(selectAllAuthors);
   const [offset, setOffset] = useState(0);
-  const [filter, setFilter] = useState("");
+  const [order, setOrder] = useState("");
+  const [criterium, setCriterium] = useState("desc");
   const endRef = useRef(null);
   const intersecting = useIntersectionObserver(endRef);
   const [stopLoading, setStopLoading] = useState(false);
@@ -93,26 +94,41 @@ function Authors() {
 
   useEffect(() => {
     if (offset === authors.length) {
-      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}${filter}`));
+      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}${order}`));
     }
-  }, [offset, dispatch, authors.length, filter]);
+  }, [offset, dispatch, authors.length, order, criterium]);
 
   useEffect(() => {
     dispatch(resetAuthors());
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [dispatch, filter]);
+  }, [dispatch, order, criterium]);
 
   return (
     <MainContainer>
       <Title>Autori članaka</Title>
       <Filters>
-        <ButtonContainer onClick={() => setFilter("&order=name,asc")}>
+        <ButtonContainer
+          onClick={() => {
+            setOrder(`&order=name,${criterium}`);
+            setCriterium(criterium === "asc" ? "desc" : "asc");
+          }}
+        >
           Abecedno
         </ButtonContainer>
-        <ButtonContainer onClick={() => setFilter("&order=name,desc")}>
+        <ButtonContainer
+          onClick={() => {
+            setOrder(`&order=count,${criterium}`);
+            setCriterium(criterium === "asc" ? "desc" : "asc");
+          }}
+        >
           Broj članaka
         </ButtonContainer>
-        <ButtonContainer onClick={() => setFilter("&order=id,desc")}>
+        <ButtonContainer
+          onClick={() => {
+            setCriterium(criterium === "asc" ? "desc" : "asc");
+            setOrder(`&order=id,${criterium}`);
+          }}
+        >
           Najnoviji
         </ButtonContainer>
       </Filters>

@@ -2,6 +2,7 @@ const { Author, Article } = require("../models");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const { tokenExtractor } = require("../utils/tokenExtractor");
+const { sequelize } = require("../utils/db");
 
 router.get("/", async (req, res, next) => {
   let order = [];
@@ -21,11 +22,44 @@ router.get("/", async (req, res, next) => {
   }
 
   try {
+    /*
+    const authors = await sequelize.query(
+      `
+      SELECT
+        authors.id,
+        authors.username,
+        authors.name,
+        authors.email,
+        COUNT(articles.id) AS articlesCount,
+        JSON_AGG((articles.id, articles.title)) AS articles
+      FROM authors
+      LEFT JOIN articles ON authors.id=articles.author_id
+      GROUP BY authors.id
+      `,
+      {
+        type: sequelize.QueryTypes.SELECT,
+      },
+    );
+    */
     const authors = await Author.findAll({
       order,
       ...pagination,
-      attributes: { exclude: ["passwordHash"] },
-      include: Article,
+      attributes: {
+        exclude: ["passwordHash"],
+        include: [
+          [
+            sequelize.literal(
+              "(SELECT COUNT(articles.id) FROM articles where articles.author_id=author.id)",
+            ),
+            "count",
+          ],
+        ],
+      },
+      include: {
+        model: Article,
+        attributes: ["id", "authorId", "title"],
+      },
+      group: req.query.order && ["author.id"],
     });
     return res.status(200).json(authors);
   } catch (error) {
