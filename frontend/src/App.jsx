@@ -122,7 +122,7 @@ function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme === "light" ? light : dark}>
+      <ThemeProvider theme={theme === "dark" ? dark : light}>
         <RouterProvider router={router} />
         <Assistant />
       </ThemeProvider>

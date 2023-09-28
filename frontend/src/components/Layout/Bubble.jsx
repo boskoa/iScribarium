@@ -24,7 +24,7 @@ function Bubble() {
   const sizeRef = useRef(`${Math.ceil((DEFAULTSIZE * depth) / 8)}vw`);
   const size = sizeRef.current;
   const [height, setHeight] = useState(0);
-  const top = `${topRandom * height * depth * 0.9}px`;
+  const top = `${topRandom * height * depth * 0.7}px`;
   const left = `${topRandom * 80}vw`;
   const element = useRef(null);
   const location = useLocation();
