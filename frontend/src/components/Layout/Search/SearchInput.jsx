@@ -41,7 +41,7 @@ const SearchInput = forwardRef(function SearchInput(
     <SearchContainer $showSearch={showSearch}>
       {showSearch && (
         <SearchComponent
-          autoComplete="false"
+          autoComplete="off"
           ref={inputRef}
           name="search"
           onClick={(e) => e.stopPropagation()}

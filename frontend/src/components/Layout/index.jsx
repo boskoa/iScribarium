@@ -17,7 +17,7 @@ const MainContainer = styled.main`
 `;
 
 const OutletContainer = styled.div`
-  min-height: 80vh;
+  min-height: 85vh;
   width: 100%;
   position: relative;
 `;

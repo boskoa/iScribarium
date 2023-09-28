@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const COLORS = ["255, 0, 0", "0, 255, 0", "0, 0, 255", "255, 255, 0"];
 const DEFAULTSIZE = 100;
@@ -22,10 +23,20 @@ function Bubble() {
   const topRandom = topRandomRef.current;
   const sizeRef = useRef(`${Math.ceil((DEFAULTSIZE * depth) / 8)}vw`);
   const size = sizeRef.current;
-  const height = document.getElementsByTagName("html")[0].offsetHeight;
+  const [height, setHeight] = useState(0);
   const top = `${topRandom * height * depth * 0.9}px`;
   const left = `${topRandom * 80}vw`;
   const element = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/")
+      return setHeight(document.querySelector("html").offsetHeight);
+    setHeight(0);
+    setTimeout(() => {
+      setHeight(document.querySelector("html").offsetHeight);
+    }, 3000);
+  }, [location]);
 
   useEffect(() => {
     const htmlElement = document.getElementsByTagName("html")[0];

@@ -22,7 +22,7 @@ const LoginForm = styled.form`
   padding: 10px;
   background: radial-gradient(
     circle at 70% 20%,
-    rgba(0, 128, 128, 0.2) 15px,
+    rgb(72, 208, 208) 15px,
     rgb(0, 128, 128) 17px
   );
   border-radius: 50%;

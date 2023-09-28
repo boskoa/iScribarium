@@ -2,15 +2,16 @@ import styled from "styled-components";
 import Helm from "../../assets/helm.svg";
 import { useEffect, useRef, useState } from "react";
 
+const vpWidth = "100vw";
+const vpHeight = "85vh";
+const hcWidth = "200vw";
+const hcHeight = "170vh";
+
 const ViewPort = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: ${vpWidth};
+  height: ${vpHeight};
+  position: relative;
   overflow: hidden;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid green;
 
   @media (hover: none) {
     margin-top: -50px;
@@ -18,26 +19,17 @@ const ViewPort = styled.div`
 `;
 
 const HomeContainer = styled.div`
-  width: 200vh;
-  height: 200vh;
+  width: ${hcWidth};
+  height: ${hcHeight};
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 50% 50%;
   position: absolute;
   bottom: 0;
-  left: -100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  right: 0;
   transform: rotate(${({ $turn }) => $turn}deg);
   transform-origin: center center;
-  z-index: 10;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 10px solid black;
-
-  @media only screen and (min-width: 100vh) {
-    width: 200vw;
-    height: 200vw;
-    left: -100vw;
-    bottom: -100vh;
-  }
 `;
 
 const HelmContainer = styled.img`
@@ -49,22 +41,11 @@ const HelmContainer = styled.img`
   z-index: 100;
 `;
 
-const SectionContainer = styled.div`
-  border: 1px solid floralwhite;
-`;
+const SectionContainer = styled.div``;
 
 const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 90vw;
-  height: 90vw;
-
-  @media only screen and (min-width: 100vh) {
-    width: 90vh;
-    height: 90vh;
-  }
+  padding-top: 100px;
+  padding-left: 50px;
 `;
 
 function HomePage() {
@@ -132,11 +113,9 @@ function HomePage() {
         move = true;
         oldY = e.touches[0].screenY;
         oldX = e.touches[0].clientX;
-        console.log(oldY);
       });
-      document.addEventListener("touchend", (e) => {
+      document.addEventListener("touchend", () => {
         move = false;
-        console.log("END", e);
       });
       document.addEventListener("touchmove", handleMove);
     }
@@ -155,48 +134,41 @@ function HomePage() {
           src={Helm}
           alt="helm image"
         />
-        <SectionContainer
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-end",
-          }}
-        >
+        <SectionContainer>
           <Section
             style={{
-              transform: "rotate(-180deg)",
-              border: "1px solid green",
+              transform: `rotate(-180deg) translateX(-${vpWidth}) translateY(-${vpHeight})`,
+              transformOrigin: "top left",
             }}
           >
-            gore levo
+            <p>gore levo</p>
+            <p>gore levo</p>
+            <p>gore levo</p>
+            <p>gore levo</p>
+            <p>gore levo</p>
+            <p>gore levo</p>
           </Section>
         </SectionContainer>
-        <SectionContainer
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-          }}
-        >
+        <SectionContainer>
           <Section
             style={{
-              transform: "rotate(-90deg)",
-              border: "1px solid red",
+              transform: `rotate(-90deg) translateX(-${vpHeight})`,
+              transformOrigin: "top left",
             }}
           >
-            gore desno
+            <p>gore desno</p>
+            <p>gore desno</p>
+            <p>gore desno</p>
+            <p>gore desno</p>
+            <p>gore desno</p>
+            <p>gore desno</p>
           </Section>
         </SectionContainer>
-        <SectionContainer
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-start",
-          }}
-        >
+        <SectionContainer>
           <Section
             style={{
-              transform: "rotate(-270deg)",
-              border: "1px solid blue",
+              transform: `rotate(90deg) translateX(${vpWidth})`,
+              transformOrigin: "top right",
             }}
           >
             <p>dole levo</p>
@@ -230,19 +202,13 @@ function HomePage() {
             <p>dole levo</p>
           </Section>
         </SectionContainer>
-        <SectionContainer
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-          }}
-        >
-          <Section
-            style={{
-              transform: "rotate(0deg)",
-              border: "1px solid orange",
-            }}
-          >
-            dole desno
+        <SectionContainer>
+          <Section>
+            <p>dole desno</p>
+            <p>dole desno</p>
+            <p>dole desno</p>
+            <p>dole desno</p>
+            <p>dole desno</p>
           </Section>
         </SectionContainer>
       </HomeContainer>
