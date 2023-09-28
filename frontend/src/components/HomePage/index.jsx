@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Helm from "../../assets/helm.svg";
 import { useEffect, useRef, useState } from "react";
+import Authors from "./Authors";
 
 const vpWidth = "100vw";
 const vpHeight = "85vh";
@@ -203,13 +204,7 @@ function HomePage() {
           </Section>
         </SectionContainer>
         <SectionContainer>
-          <Section>
-            <p>dole desno</p>
-            <p>dole desno</p>
-            <p>dole desno</p>
-            <p>dole desno</p>
-            <p>dole desno</p>
-          </Section>
+          <Section>{degs % 360 === 0 && <Authors />}</Section>
         </SectionContainer>
       </HomeContainer>
     </ViewPort>
