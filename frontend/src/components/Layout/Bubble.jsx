@@ -17,25 +17,22 @@ const BubbleContainer = styled.div`
 function Bubble() {
   const colorRef = useRef(COLORS[Math.floor(Math.random() * COLORS.length)]);
   const color = colorRef.current;
-  const depthRef = useRef(Math.random() * 0.99);
+  const depthRef = useRef(Math.random() > 0.2 ? Math.random() : 0.2);
   const depth = depthRef.current;
-  const topRandomRef = useRef(Math.random());
-  const topRandom = topRandomRef.current;
+  const randomDistanceRef = useRef(Math.random());
+  const randomDistance = randomDistanceRef.current;
   const sizeRef = useRef(`${Math.ceil((DEFAULTSIZE * depth) / 8)}vw`);
   const size = sizeRef.current;
   const [height, setHeight] = useState(0);
-  const top = `${topRandom * height * depth * 0.7}px`;
-  const left = `${topRandom * 80}vw`;
+  const top = `${height * depth * randomDistance - 200 * depth}px`;
+  const left = `${randomDistance * 80}vw`;
   const element = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/")
-      return setHeight(document.querySelector("html").offsetHeight);
-    setHeight(0);
     setTimeout(() => {
       setHeight(document.querySelector("html").offsetHeight);
-    }, 3000);
+    }, 1000);
   }, [location]);
 
   useEffect(() => {

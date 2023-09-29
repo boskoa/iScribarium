@@ -1,13 +1,12 @@
 import { styled, useTheme } from "styled-components";
 import { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
 
 const WhaleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: ${({ $top }) => $top};
+  bottom: 20%;
   left: 10%;
   width: 80%;
   z-index: -2;
@@ -19,7 +18,6 @@ const WhaleContainer = styled.div`
 function Whale() {
   const element = useRef(null);
   const theme = useTheme();
-  const location = useLocation();
 
   useEffect(() => {
     const htmlElement = document.getElementsByTagName("html")[0];
@@ -38,10 +36,7 @@ function Whale() {
   }, []);
 
   return (
-    <WhaleContainer
-      ref={element}
-      $top={location.pathname === "/" ? "30vh" : "40vh"}
-    >
+    <WhaleContainer>
       <svg
         width="80%"
         version="1.1"

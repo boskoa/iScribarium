@@ -6,6 +6,7 @@ const AuthorContainer = styled.div`
   border: 3px solid black;
   border-radius: 8px;
   padding: 10px;
+  position: relative;
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
@@ -25,10 +26,19 @@ const Article = styled(Link)`
   color: ${({ theme }) => theme.main.color};
 `;
 
+const ArticleCount = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
 function Author({ author }) {
   return (
     <AuthorContainer>
       <Name>{author.name}</Name>
+      <ArticleCount>
+        {author.count} {author.count === 1 ? "article" : "articles"}
+      </ArticleCount>
       <Articles>
         {author.articles?.map((a) => (
           <Article to={`/articles/${a.id}`} key={a.id}>

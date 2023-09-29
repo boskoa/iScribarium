@@ -26,15 +26,18 @@ const Filters = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  padding: 7px;
-  border: 3px solid black;
+  padding: 5px;
+  border: 3px solid ${({ $selected }) => ($selected ? "lime" : "black")};
   border-radius: 5px;
   background-color: yellow;
   color: black;
-  font-size: 14px;
+  width: 115px;
+  text-align: center;
+  font-size: 13px;
   font-weight: 600;
   transition: all 0.3s;
   cursor: pointer;
+  user-select: none;
 
   &:hover {
     border-color: red;
@@ -70,7 +73,8 @@ const LIMIT = 10; //change later
 function Authors() {
   const authors = useSelector(selectAllAuthors);
   const [offset, setOffset] = useState(0);
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState("&order=name,asc");
+  const selectedFilter = order.split(",")[0].split("=")[1];
   const [criterium, setCriterium] = useState("desc");
   const endRef = useRef(null);
   const intersecting = useIntersectionObserver(endRef);
@@ -94,12 +98,13 @@ function Authors() {
 
   useEffect(() => {
     if (offset === authors.length) {
-      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}${order}`));
+      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT},${order}`));
     }
   }, [offset, dispatch, authors.length, order, criterium]);
 
   useEffect(() => {
     dispatch(resetAuthors());
+    setOffset(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [dispatch, order, criterium]);
 
@@ -108,28 +113,34 @@ function Authors() {
       <Title>Autori članaka</Title>
       <Filters>
         <ButtonContainer
+          $selected={selectedFilter === "name"}
           onClick={() => {
             setOrder(`&order=name,${criterium}`);
             setCriterium(criterium === "asc" ? "desc" : "asc");
           }}
         >
-          Abecedno
+          Abecedno{" "}
+          {selectedFilter === "name" ? (criterium === "desc" ? "⇡" : "⇣") : ""}
         </ButtonContainer>
         <ButtonContainer
+          $selected={selectedFilter === "count"}
           onClick={() => {
             setOrder(`&order=count,${criterium}`);
             setCriterium(criterium === "asc" ? "desc" : "asc");
           }}
         >
-          Broj članaka
+          Broj članaka{" "}
+          {selectedFilter === "count" ? (criterium === "desc" ? "⇡" : "⇣") : ""}
         </ButtonContainer>
         <ButtonContainer
+          $selected={selectedFilter === "id"}
           onClick={() => {
             setCriterium(criterium === "asc" ? "desc" : "asc");
             setOrder(`&order=id,${criterium}`);
           }}
         >
-          Najnoviji
+          Najnoviji{" "}
+          {selectedFilter === "id" ? (criterium === "desc" ? "⇡" : "⇣") : ""}
         </ButtonContainer>
       </Filters>
       <AuthorsContainer>

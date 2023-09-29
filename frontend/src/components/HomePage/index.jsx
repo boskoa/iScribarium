@@ -63,7 +63,7 @@ function HomePage() {
 
     function handleScroll(e) {
       span++;
-      if (span < 10) return;
+      if (span < 20) return;
 
       if (e.deltaY < 0) {
         degsRef.current -= 90;
@@ -79,27 +79,27 @@ function HomePage() {
       if (!move) return;
       span++;
 
-      if (span < 20) return;
+      if (span <= 5) return;
 
       newY = e.touches[0].screenY;
       newX = e.touches[0].clientX;
 
       if (newY - oldY > 20) {
-        degsRef.current -= 45;
+        degsRef.current -= 90;
         oldY = newY;
         span = 0;
       } else if (oldY - newY > 20) {
-        degsRef.current += 45;
+        degsRef.current += 90;
         oldY = newY;
         span = 0;
       }
 
       if (newX - oldX > 20) {
-        degsRef.current -= 45;
+        degsRef.current -= 90;
         oldX = newX;
         span = 0;
       } else if (oldX - newX > 20) {
-        degsRef.current += 45;
+        degsRef.current += 90;
         oldX = newX;
         span = 0;
       }
@@ -121,7 +121,10 @@ function HomePage() {
       document.addEventListener("touchmove", handleMove);
     }
 
-    return () => document.removeEventListener("wheel", handleScroll);
+    return () => {
+      document.removeEventListener("wheel", handleScroll);
+      document.removeEventListener("touchmove", handleMove);
+    };
   }, []);
 
   return (
