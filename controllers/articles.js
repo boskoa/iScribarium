@@ -2,6 +2,7 @@ const { Op } = require("sequelize");
 const { Article, Category, Author } = require("../models");
 const { Article_Category } = require("../models/articleCategory");
 const { tokenExtractor } = require("../utils/tokenExtractor");
+const { sequelize } = require("../utils/db");
 const router = require("express").Router();
 
 router.get("/", async (req, res, next) => {
@@ -50,6 +51,17 @@ router.get("/", async (req, res, next) => {
       },
     });
     return res.status(200).json(articles);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/random", async (req, res, next) => {
+  try {
+    const random = await Article.findOne({
+      order: sequelize.random(),
+    });
+    return res.status(200).json(random);
   } catch (error) {
     next(error);
   }

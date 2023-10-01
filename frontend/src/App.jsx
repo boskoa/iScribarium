@@ -1,6 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllAuthors } from "./features/authors/authorsSlice";
 
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -120,7 +119,6 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllAuthors(""));
     dispatch(getAllArticles(""));
   }, [dispatch]);
 

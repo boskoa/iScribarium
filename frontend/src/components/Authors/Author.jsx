@@ -30,6 +30,7 @@ const ArticlesContainer = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
+  z-index: 1;
 `;
 
 const Article = styled(Link)`
@@ -59,7 +60,7 @@ function handleMonthlyData(articles) {
   }
   const keys = Object.keys(chartData);
   articles.forEach((o) => {
-    const key = o.createdAt.slice(6, 10);
+    const key = o.f4?.slice(6, 10);
     if (keys.includes(key)) {
       chartData[key] += 1;
     }
@@ -83,8 +84,8 @@ function handleYearlyData(articles) {
   }
 
   articles.forEach((o) => {
-    const key = `${new Date(o.createdAt).getFullYear()}-${
-      new Date(o.createdAt).getMonth() + 1
+    const key = `${new Date(o.f4).getFullYear()}-${
+      new Date(o.f4).getMonth() + 1
     }`;
     chartData[key] += 1;
   });
@@ -104,26 +105,28 @@ function Author({ author }) {
           ? "članka"
           : "članaka"}
       </ArticleCount>
-      <Articles>
-        <Graphs>
-          <Graph
-            chartData={handleMonthlyData(author.articles)}
-            chartTitle="Broj novih članaka u prošlih mesec dana"
-          />
-          <Graph
-            chartData={handleYearlyData(author.articles)}
-            chartTitle="Broj novih članaka u prošlih godinu dana"
-          />
-        </Graphs>
-        {Boolean(author.articles.length) && <Name>Članci:</Name>}
-        <ArticlesContainer>
-          {author.articles?.map((a) => (
-            <Article to={`/articles/${a.id}`} key={a.id}>
-              {a.title}
-            </Article>
-          ))}
-        </ArticlesContainer>
-      </Articles>
+      {author.count !== "0" && (
+        <Articles>
+          <Graphs>
+            <Graph
+              chartData={handleMonthlyData(author.articles)}
+              chartTitle="Broj novih članaka u prošlih mesec dana"
+            />
+            <Graph
+              chartData={handleYearlyData(author.articles)}
+              chartTitle="Broj novih članaka u prošlih godinu dana"
+            />
+          </Graphs>
+          <Name>Članci:</Name>
+          <ArticlesContainer>
+            {author.articles?.map((a) => (
+              <Article to={`/articles/${a.f1}`} key={a.f1}>
+                {a.f2}
+              </Article>
+            ))}
+          </ArticlesContainer>
+        </Articles>
+      )}
     </AuthorContainer>
   );
 }

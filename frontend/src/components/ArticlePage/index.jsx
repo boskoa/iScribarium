@@ -61,7 +61,7 @@ const ArticleContainer = styled.div`
   overflow: hidden;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   margin-bottom: 20px;
 `;
 

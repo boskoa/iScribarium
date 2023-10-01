@@ -22,7 +22,6 @@ router.get("/", async (req, res, next) => {
   }
 
   try {
-    /*
     const authors = await sequelize.query(
       `
       SELECT
@@ -30,20 +29,22 @@ router.get("/", async (req, res, next) => {
         authors.username,
         authors.name,
         authors.email,
-        COUNT(articles.id) AS articlesCount,
-        JSON_AGG((articles.id, articles.title)) AS articles
+        authors.created_at,
+        authors.updated_at,
+        COUNT(articles.id) AS count,
+        JSON_AGG((articles.id, articles.title, articles.author_id, articles.created_at, articles.updated_at)) AS articles
       FROM authors
       LEFT JOIN articles ON authors.id=articles.author_id
       GROUP BY authors.id
+      ORDER BY ${order[0][0]} ${order[0][1]}, ${order[1][0]} ${order[1][1]}
+      LIMIT ${pagination.limit} OFFSET ${pagination.offset}
       `,
       {
         type: sequelize.QueryTypes.SELECT,
       },
     );
-    */
+    /*
     const authors = await Author.findAll({
-      order,
-      ...pagination,
       attributes: {
         exclude: ["passwordHash"],
         include: [
@@ -55,12 +56,16 @@ router.get("/", async (req, res, next) => {
           ],
         ],
       },
+      order,
+      ...pagination,
       include: {
         model: Article,
         attributes: ["id", "authorId", "title", "createdAt"],
       },
       group: req.query.order && ["author.id"],
     });
+    */
+
     return res.status(200).json(authors);
   } catch (error) {
     next(error);

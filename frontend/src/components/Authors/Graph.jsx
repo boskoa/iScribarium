@@ -7,7 +7,7 @@ const ChartContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   border: 1px solid teal;
-  overflow: hidden;
+  z-index: 0;
 `;
 
 function Graph({ chartData, chartTitle }) {

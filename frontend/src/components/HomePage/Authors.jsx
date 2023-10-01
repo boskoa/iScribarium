@@ -1,6 +1,14 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes, css } from "styled-components";
+import {
+  getAllAuthors,
+  resetAuthors,
+  selectAllAuthors,
+} from "../../features/authors/authorsSlice";
+import ProfileIcon from "../../assets/defaultAvatar.svg";
 
-const AuthorsContainer = styled.div`
+export const AuthorsContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -17,29 +25,83 @@ const slideIn = keyframes`
   }
 `;
 
-const Author = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: teal;
+export const Author = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  width: 80vw;
+  height: 16vh;
+  border: 3px solid black;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
   animation: ${() =>
-    css`0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${slideIn} both`};
+    css`0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${slideIn} both`};
 
   &:nth-child(${({ $order }) => $order}) {
-    animation-delay: ${({ $order }) => `${$order * 0.3 + 0.5}s`};
+    animation-delay: ${({ $order }) => `${$order * 0.2 + 0.3}s`};
+  }
+
+  @media only screen and (min-width: 600px) {
+    width: 40vw;
   }
 `;
 
+const Image = styled.img`
+  border-radius: 7vh;
+  border: 2px solid black;
+  height: 12vh;
+  width: 12vh;
+  margin: 4px;
+`;
+
+const AuthorData = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+  height: 95%;
+`;
+
+const DataField = styled.p`
+  font-size: 12px;
+`;
+
 function Authors() {
+  const authors = useSelector(selectAllAuthors);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetAuthors());
+    dispatch(getAllAuthors(`?pagination=0,8&order=count,desc`));
+  }, [dispatch]);
+
   return (
     <AuthorsContainer>
-      <Author $order={1} />
-      <Author $order={2} />
-      <Author $order={3} />
-      <Author $order={4} />
-      <Author $order={5} />
-      <Author $order={6} />
-      <Author $order={7} />
-      <Author $order={8} />
+      {authors?.map((a, id) => (
+        <Author $order={id + 1} key={a.id}>
+          <Image
+            src={`/public/data/uploads/avatars/${a.id}.webp`}
+            alt="user avatar"
+            onError={(e) => {
+              e.currentTarget.src = ProfileIcon;
+              e.currentTarget.height = "20";
+              e.currentTarget.width = "20";
+            }}
+          />
+          <AuthorData>
+            <DataField>Ime: {a.name}</DataField>
+            <DataField>Broj članaka: {a.count}</DataField>
+            <DataField>
+              Član od: {new Date(a.created_at).toLocaleDateString("de-DE")}
+            </DataField>
+            <DataField>
+              Aktivan: {new Date(a.updated_at).toLocaleDateString("de-DE")}
+            </DataField>
+          </AuthorData>
+        </Author>
+      ))}
     </AuthorsContainer>
   );
 }

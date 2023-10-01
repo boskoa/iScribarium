@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Helm from "../../assets/helm.svg";
 import { useEffect, useRef, useState } from "react";
 import Authors from "./Authors";
+import LastArticles from "./LastArticles";
+import LuckyArticle from "./LuckyArticle";
 
 const vpWidth = "100vw";
 const vpHeight = "85vh";
@@ -145,12 +147,7 @@ function HomePage() {
               transformOrigin: "top left",
             }}
           >
-            <p>gore levo</p>
-            <p>gore levo</p>
-            <p>gore levo</p>
-            <p>gore levo</p>
-            <p>gore levo</p>
-            <p>gore levo</p>
+            <LuckyArticle />
           </Section>
         </SectionContainer>
         <SectionContainer>
@@ -160,12 +157,7 @@ function HomePage() {
               transformOrigin: "top left",
             }}
           >
-            <p>gore desno</p>
-            <p>gore desno</p>
-            <p>gore desno</p>
-            <p>gore desno</p>
-            <p>gore desno</p>
-            <p>gore desno</p>
+            <LastArticles />
           </Section>
         </SectionContainer>
         <SectionContainer>

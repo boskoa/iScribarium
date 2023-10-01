@@ -22,6 +22,7 @@ const Result = styled.div`
 const StyledLink = styled(Link)`
   text-decoration: none;
   font-weight: 600;
+  color: ${({ theme }) => theme.main.color};
 `;
 
 function SearchResults() {

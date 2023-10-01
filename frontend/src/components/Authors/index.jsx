@@ -68,7 +68,7 @@ const SpinnerContainer = styled.div`
   z-index: -3;
 `;
 
-const LIMIT = 10; //change later
+const LIMIT = 5; //change later
 
 function Authors() {
   const authors = useSelector(selectAllAuthors);
@@ -98,7 +98,7 @@ function Authors() {
 
   useEffect(() => {
     if (offset === authors.length) {
-      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT},${order}`));
+      dispatch(getAllAuthors(`?pagination=${offset},${LIMIT}${order}`));
     }
   }, [offset, dispatch, authors.length, order, criterium]);
 
