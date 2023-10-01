@@ -36,6 +36,9 @@ const loginSlice = createSlice({
       window.localStorage.removeItem("loggedIScribariumAuthor");
       state.author = null;
     },
+    resetError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,6 +72,6 @@ export function selectLoginError(state) {
 
 export const selectId = createSelector([selectLoggedAuthor], (a) => a?.id);
 
-export const { alreadyLogged, logout } = loginSlice.actions;
+export const { alreadyLogged, logout, resetError } = loginSlice.actions;
 
 export default loginSlice.reducer;

@@ -1,87 +1,69 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { styled, keyframes, css } from "styled-components";
+import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useTimedMessage from "../../customHooks/useTimedMessage";
 import { DevTool } from "@hookform/devtools";
-import { selectId } from "../../features/login/loginSlice";
 import {
-  createAuthor,
+  alreadyLogged,
+  logout,
+  selectLoggedAuthor,
+} from "../../features/login/loginSlice";
+import {
   resetError,
-  selectAllAuthors,
   selectAuthorsError,
   selectAuthorsLoading,
+  updateAuthor,
 } from "../../features/authors/authorsSlice";
 
-const LoginForm = styled.form`
+const SettingsForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 300px;
+  max-width: 300px;
   height: 300px;
   padding: 10px;
-  background: radial-gradient(
-    circle at 70% 20%,
-    rgb(72, 208, 208) 15px,
-    rgb(0, 128, 128) 17px
-  );
-  border-radius: 50%;
-  border: 1px solid black;
+  border-radius: 5px;
   padding: 20px;
   position: relative;
+  background-color: ${({ theme }) => theme.header.bg};
+  opacity: 0.8;
 `;
 
-const agitate = (x, y) => keyframes`
-  from {
-    transform: translateX(${x + 2}px) translateY(${y}px)
-  }
-  to {
-    transform: translateX(${x - 2}px) translateY(${y}px)
-  }
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
 
-const rotate = (x, y) => keyframes`
-  from {
-    transform: rotate(0deg) translateX(${x}px) translateY(${y}px) rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg) translateX(${x}px) translateY(${y}px) rotate(-360deg);
-  }
-`;
-
-const ButtonContainer = styled.button`
-  height: 70px;
-  width: 70px;
-  background: radial-gradient(
-    circle at 70% 20%,
-    rgb(240, 160, 160) 4px,
-    rgb(220, 20, 60) 6px
-  );
-  border-radius: 50%;
+const Button = styled.button`
+  background-color: #517ddb5c;
+  color: ${({ theme }) => theme.main.color};
+  font-size: 13px;
+  border-radius: 5px;
   border: 1px solid black;
+  padding: 5px;
+  min-width: 50px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 115px;
-  left: 115px;
-  cursor: pointer;
-  transform: translateX(${({ x }) => x}px) translateY(${({ y }) => y}px);
-  transition: 1s all 0.2s;
-  animation: ${({ $submitted, x, y, direction }) =>
-    $submitted && css`0.5s ease-in-out ${direction} ${rotate(x, y)}`};
+  transition: all 0.1s;
 
   &:hover {
-    animation: ${({ $submitted, x, y }) =>
-      !$submitted &&
-      css`0.01s infinite alternate ease-in-out ${agitate(x, y)}`};
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: scale(1.05);
   }
 `;
 
-const LoginInput = styled.input`
+const SettingsInput = styled.input`
   background-color: rgb(91, 206, 206);
   border: 1px solid black;
   border-radius: 3px;
@@ -93,28 +75,42 @@ const LoginInput = styled.input`
   }
 `;
 
-function RegisterData() {
+function AuthorData({ author }) {
   const [submitted, setSubmitted] = useState(false);
   const [canceled, setCanceled] = useState(false);
   const addMessage = useTimedMessage();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const numberOfAuthors = useSelector(selectAllAuthors).length;
   const error = useSelector(selectAuthorsError);
   const loading = useSelector(selectAuthorsLoading);
-  const loggedAuthor = useSelector(selectId);
+  const loggedAuthor = useSelector(selectLoggedAuthor);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
     control,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({
+    defaultValues: {
+      name: author.name,
+      username: author.username,
+      password: "",
+      email: author.email,
+    },
+    mode: "onBlur",
+  });
 
-  function handleRegister(data) {
+  function handleUpdate(data) {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 600);
-    dispatch(createAuthor(data));
+    dispatch(
+      updateAuthor({
+        id: loggedAuthor.id,
+        token: loggedAuthor.token,
+        newData: data,
+      }),
+    );
   }
 
   function handleCancel() {
@@ -126,21 +122,39 @@ function RegisterData() {
   }
 
   useEffect(() => {
-    if (loggedAuthor) {
-      addMessage({ content: "Već imate nalog", variety: "error" });
-      navigate(-1);
+    if (!loggedAuthor) {
+      navigate("/login");
     }
-  }, [loggedAuthor, addMessage, navigate]);
+  }, [loggedAuthor, navigate]);
 
   useEffect(() => {
     if (submitted && !loading && !error) {
       addMessage({
-        content: "Uspešna registracija, možete se ulogovati",
+        content: getValues().password
+          ? "Uspešna izmena. Lozinka je promenjena. Ponovo se prijavite."
+          : "Uspešna izmena",
         variety: "success",
       });
+
+      const values = { ...getValues() };
+      if (values.password) {
+        dispatch(logout());
+      } else {
+        let storedAuthor = JSON.parse(
+          window.localStorage.getItem("loggedIScribariumAuthor"),
+        );
+        delete values.password;
+        storedAuthor = { ...storedAuthor, ...values };
+        window.localStorage.setItem(
+          "loggedIScribariumAuthor",
+          JSON.stringify(storedAuthor),
+        );
+        dispatch(alreadyLogged(storedAuthor));
+      }
+
       setTimeout(() => navigate("/"), 500);
     }
-  }, [numberOfAuthors, addMessage, navigate, loading, error, submitted]);
+  }, [addMessage, navigate, loading, error, submitted, getValues, dispatch]);
 
   useEffect(() => {
     if (errors.name?.message) {
@@ -174,10 +188,9 @@ function RegisterData() {
   }, [error, addMessage, dispatch]);
 
   return (
-    <LoginForm onSubmit={handleSubmit(handleRegister)}>
-      <LoginInput
+    <SettingsForm onSubmit={handleSubmit(handleUpdate)}>
+      <SettingsInput
         type="text"
-        placeholder="ime"
         {...register("name", {
           required: true,
           minLength: {
@@ -186,61 +199,63 @@ function RegisterData() {
           },
         })}
       />
-      <LoginInput
+      <SettingsInput
         type="text"
         placeholder="korisničko ime"
         {...register("username", {
-          required: true,
+          required: false,
           minLength: {
             value: 2,
             message: "Korisničko ime mora imati najmanje 2 karaktera.",
           },
         })}
       />
-      <LoginInput
+      <SettingsInput
         type="password"
         placeholder="lozinka"
         {...register("password", {
-          required: true,
+          required: false,
           minLength: {
             value: 6,
             message: "Lozinka mora imati najmanje 6 karaktera.",
           },
         })}
       />
-      <LoginInput
+      <SettingsInput
         type="email"
         placeholder="email"
         {...register("email", {
-          required: true,
+          required: false,
           pattern: {
             value: /\S+@\S+\.\S+/,
             message: "Neodgovarajući format mejla",
           },
         })}
       />
-      <ButtonContainer
-        type="submit"
-        x={115}
-        y={115}
-        $submitted={submitted}
-        direction=""
-      >
-        Pošalji
-      </ButtonContainer>
-      <ButtonContainer
-        type="button"
-        x={-115}
-        y={115}
-        $submitted={canceled}
-        onClick={handleCancel}
-        direction="reverse"
-      >
-        Nazad
-      </ButtonContainer>
+      <ButtonsContainer>
+        <Button
+          type="submit"
+          x={115}
+          y={115}
+          $submitted={submitted}
+          direction=""
+        >
+          Pošalji
+        </Button>
+        <Button
+          type="button"
+          x={-115}
+          y={115}
+          $submitted={canceled}
+          onClick={handleCancel}
+          direction="reverse"
+        >
+          Nazad
+        </Button>
+      </ButtonsContainer>
       <DevTool control={control} />
-    </LoginForm>
+    </SettingsForm>
   );
 }
 
-export default RegisterData;
+export default AuthorData;

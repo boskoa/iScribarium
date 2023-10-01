@@ -30,6 +30,25 @@ export const createAuthor = createAsyncThunk(
   },
 );
 
+export const updateAuthor = createAsyncThunk(
+  "authors/updateAuthor",
+  async (data) => {
+    const { id, token, newData } = data;
+    console.log(data);
+    const config = {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(
+      `${BASE_URL}/${id}`,
+      { ...newData },
+      config,
+    );
+    return response.data;
+  },
+);
+
 const authorsSlice = createSlice({
   name: "authors",
   initialState,
@@ -37,6 +56,9 @@ const authorsSlice = createSlice({
     resetAuthors: (state) => {
       state.ids = [];
       state.entities = {};
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -66,6 +88,19 @@ const authorsSlice = createSlice({
       .addCase(createAuthor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(updateAuthor.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(updateAuthor.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        authorsAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(updateAuthor.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -84,6 +119,6 @@ export function selectAuthorsError(state) {
   return state.authors.error;
 }
 
-export const { resetAuthors } = authorsSlice.actions;
+export const { resetAuthors, resetError } = authorsSlice.actions;
 
 export default authorsSlice.reducer;

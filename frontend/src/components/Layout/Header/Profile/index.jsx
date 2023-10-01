@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import ProfileIcon from "./ProfileIcon";
+import ProfileIcon from "../../../../assets/defaultAvatar.svg";
 import { useEffect, useRef, useState } from "react";
 import LoggedInItems from "./LoggedInItems";
 import { useSelector } from "react-redux";
@@ -14,7 +14,6 @@ const IconContainer = styled.div`
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  padding: 3px;
   box-shadow: ${({ $show }) => !$show && "0 0 10px 0 rgba(100, 250, 100, 1)"};
   transition: all 0.3s;
   cursor: pointer;
@@ -23,6 +22,10 @@ const IconContainer = styled.div`
     box-shadow: none;
     transform: scale(0.95);
   }
+`;
+
+const Image = styled.img`
+  border-radius: 50%;
 `;
 
 const Menu = styled.div`
@@ -70,7 +73,17 @@ function ProfileButton() {
       $show={showMenu}
       onClick={() => setShowMenu((p) => !p)}
     >
-      <ProfileIcon />
+      <Image
+        src={`/public/data/uploads/avatars/${authorLogged}.webp`}
+        alt="user avatar"
+        onError={(e) => {
+          e.currentTarget.src = ProfileIcon;
+          e.currentTarget.height = "28";
+          e.currentTarget.width = "28";
+        }}
+        height="100%"
+        width="100%"
+      />
       <Menu $show={showMenu}>
         {authorLogged ? <LoggedInItems /> : <LoggedOutItems />}
       </Menu>

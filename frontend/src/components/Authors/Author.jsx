@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
+import Graph from "./Graph";
 
 const AuthorContainer = styled.div`
   min-height: 80px;
@@ -10,19 +11,31 @@ const AuthorContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
-const Name = styled.h4`
-  margin-bottom: 10px;
-`;
+const Name = styled.h4``;
 
 const Articles = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+`;
+
+const Graphs = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ArticlesContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 10px;
 `;
 
 const Article = styled(Link)`
   font-size: 14px;
   text-decoration: none;
+  width: 100px;
   color: ${({ theme }) => theme.main.color};
 `;
 
@@ -32,19 +45,84 @@ const ArticleCount = styled.div`
   right: 10px;
 `;
 
+function handleMonthlyData(articles) {
+  let chartData = {};
+  let today = new Date();
+  today.setDate(today.getDate() - 30);
+  chartData[`${today.getMonth() + 1}-${today.getDate()}`] = 0;
+
+  for (let i = 30; i > 0; i--) {
+    today.setDate(today.getDate() + 1);
+    chartData[
+      `${today.getMonth() + 1}-${today.getDate().toString().padStart(2, "0")}`
+    ] = 0;
+  }
+  const keys = Object.keys(chartData);
+  articles.forEach((o) => {
+    const key = o.createdAt.slice(6, 10);
+    if (keys.includes(key)) {
+      chartData[key] += 1;
+    }
+  });
+
+  return chartData;
+}
+
+function handleYearlyData(articles) {
+  let chartData = {};
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+
+  for (let j = year - 1; j <= year; j++) {
+    for (let i = 1; i <= 12; i++) {
+      if (j === year && i > month) {
+        break;
+      }
+      chartData[`${j}-${i}`] = 0;
+    }
+  }
+
+  articles.forEach((o) => {
+    const key = `${new Date(o.createdAt).getFullYear()}-${
+      new Date(o.createdAt).getMonth() + 1
+    }`;
+    chartData[key] += 1;
+  });
+
+  return chartData;
+}
+
 function Author({ author }) {
   return (
     <AuthorContainer>
       <Name>{author.name}</Name>
       <ArticleCount>
-        {author.count} {author.count === 1 ? "article" : "articles"}
+        {author.count}{" "}
+        {author.count === 1
+          ? "članak"
+          : [2, 3, 4].includes(author.count)
+          ? "članka"
+          : "članaka"}
       </ArticleCount>
       <Articles>
-        {author.articles?.map((a) => (
-          <Article to={`/articles/${a.id}`} key={a.id}>
-            {a.title}
-          </Article>
-        ))}
+        <Graphs>
+          <Graph
+            chartData={handleMonthlyData(author.articles)}
+            chartTitle="Broj novih članaka u prošlih mesec dana"
+          />
+          <Graph
+            chartData={handleYearlyData(author.articles)}
+            chartTitle="Broj novih članaka u prošlih godinu dana"
+          />
+        </Graphs>
+        {Boolean(author.articles.length) && <Name>Članci:</Name>}
+        <ArticlesContainer>
+          {author.articles?.map((a) => (
+            <Article to={`/articles/${a.id}`} key={a.id}>
+              {a.title}
+            </Article>
+          ))}
+        </ArticlesContainer>
       </Articles>
     </AuthorContainer>
   );

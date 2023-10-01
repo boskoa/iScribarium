@@ -57,7 +57,7 @@ router.get("/", async (req, res, next) => {
       },
       include: {
         model: Article,
-        attributes: ["id", "authorId", "title"],
+        attributes: ["id", "authorId", "title", "createdAt"],
       },
       group: req.query.order && ["author.id"],
     });

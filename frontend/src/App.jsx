@@ -18,6 +18,7 @@ const EditArticle = lazy(() => import("./components/EditArticle"));
 const SearchResults = lazy(() => import("./components/SearchResults"));
 const Authors = lazy(() => import("./components/Authors"));
 const Register = lazy(() => import("./components/Register"));
+const AuthorSettings = lazy(() => import("./components/AuthorSettings"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -85,6 +86,14 @@ function App() {
           element: (
             <Suspense fallback="Loading">
               <Authors />
+            </Suspense>
+          ),
+        },
+        {
+          path: "authors/settings",
+          element: (
+            <Suspense fallback="Loading">
+              <AuthorSettings />
             </Suspense>
           ),
         },

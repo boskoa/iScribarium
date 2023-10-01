@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { styled, keyframes, css } from "styled-components";
 import {
   loginAuthor,
+  resetError,
   selectId,
   selectLoginError,
 } from "../../features/login/loginSlice";
@@ -139,8 +140,9 @@ function UserData() {
   useEffect(() => {
     if (loginError) {
       addMessage({ content: loginError, variety: "error" });
+      setTimeout(() => dispatch(resetError()), 500);
     }
-  }, [loginError, addMessage]);
+  }, [loginError, addMessage, dispatch]);
 
   return (
     <LoginForm onSubmit={handleSubmit(handleLogin)}>

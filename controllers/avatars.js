@@ -20,10 +20,10 @@ const upload = multer({
   limits: { fileSize: 512000 },
   fileFilter: (req, file, cb) => {
     if (
-      req.file.mimetype === "image/png" ||
-      req.file.mimetype === "image/jpg" ||
-      req.file.mimetype === "image/jpeg" ||
-      req.file.mimetype === "image/webp"
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/webp"
     ) {
       cb(null, true);
     } else {

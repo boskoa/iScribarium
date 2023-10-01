@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/public": {
+        target: "http://127.0.0.1:3003/",
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });

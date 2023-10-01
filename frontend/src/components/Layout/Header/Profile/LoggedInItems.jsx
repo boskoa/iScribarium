@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import { logout } from "../../../../features/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Item = styled.p`
   color: white;
@@ -12,11 +13,12 @@ export const Item = styled.p`
 
 function LoggedInItems() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <>
       <Item onClick={() => dispatch(logout())}>odjava</Item>
-      <Item>profil</Item>
+      <Item onClick={() => navigate("/authors/settings")}>profil</Item>
     </>
   );
 }

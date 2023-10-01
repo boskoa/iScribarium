@@ -58,6 +58,7 @@ const components = {
 const ArticleContainer = styled.div`
   margin: 20px;
   transition: all 0.1s;
+  overflow: hidden;
 `;
 
 const Title = styled.h1`
