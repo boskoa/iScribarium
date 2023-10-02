@@ -9,4 +9,10 @@ Article.belongsTo(Author);
 Category.belongsToMany(Article, { through: Article_Category });
 Article.belongsToMany(Category, { through: Article_Category });
 
+Category.hasMany(Article_Category);
+Article_Category.belongsTo(Category);
+
+Article.hasMany(Article_Category);
+Article_Category.belongsTo(Article);
+
 module.exports = { Article, Author, Category };

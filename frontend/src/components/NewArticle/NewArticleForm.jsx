@@ -100,7 +100,6 @@ function NewArticleForm() {
         ...data,
         authorId: loggedAuthor.id,
       };
-      console.log("NEWDATA", newData);
       dispatch(
         addNewArticle({
           newData,

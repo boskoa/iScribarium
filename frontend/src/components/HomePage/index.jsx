@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Authors from "./Authors";
 import LastArticles from "./LastArticles";
 import LuckyArticle from "./LuckyArticle";
+import Categories from "./Categories";
 
 const vpWidth = "100vw";
 const vpHeight = "85vh";
@@ -36,19 +37,25 @@ const HomeContainer = styled.div`
 `;
 
 const HelmContainer = styled.img`
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   position: absolute;
-  top: calc(50% - 130px);
-  left: calc(50% - 130px);
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
   z-index: 100;
+  opacity: 1;
 `;
 
 const SectionContainer = styled.div``;
 
 const Section = styled.div`
-  padding-top: 100px;
-  padding-left: 50px;
+  padding-top: 50px;
+  padding-left: 80px;
+
+  @media only screen and (max-width: 100vh) {
+    padding-top: 80px;
+    padding-left: 50px;
+  }
 `;
 
 function HomePage() {
@@ -167,39 +174,13 @@ function HomePage() {
               transformOrigin: "top right",
             }}
           >
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
-            <p>dole levo</p>
+            <Categories />
           </Section>
         </SectionContainer>
         <SectionContainer>
-          <Section>{degs % 360 === 0 && <Authors />}</Section>
+          <Section>
+            <Authors />
+          </Section>
         </SectionContainer>
       </HomeContainer>
     </ViewPort>

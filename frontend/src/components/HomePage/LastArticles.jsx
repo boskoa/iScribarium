@@ -55,19 +55,31 @@ const Article = styled.div`
   width: 80vw;
   overflow: hidden;
   padding: 3px;
-  height: 22vh;
+  height: 23vh;
   position: relative;
   border: 3px solid black;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.1);
   transition: all 0.1s;
 
+  @media (hover: none) {
+    &:nth-child(${({ $order }) => $order}) {
+      ${({ $order }) => ($order > 3 ? "display: none;" : "")};
+    }
+
+    @media only screen and (min-width: 100vh) {
+      height: 30vh;
+    }
+  }
+
   @media only screen and (min-width: 600px) {
     width: 40vw;
   }
 
-  &:hover {
-    transform: scale(1.03);
+  @media only screen and (max-width: 600px) {
+    &:nth-child(${({ $order }) => $order}) {
+      ${({ $order }) => ($order > 3 ? "display: none;" : "")};
+    }
   }
 `;
 
@@ -93,7 +105,21 @@ export const LinkContainer = styled.div`
 
 export const LinkTo = styled(Link)`
   text-decoration: none;
-  color: ${({ theme }) => theme.main.color};
+  color: transparent;
+  background: linear-gradient(
+    to top,
+    limegreen 50%,
+    ${({ theme }) => theme.main.color} 50%
+  );
+  background-size: 100% 200%;
+  background-position-y: top;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: all 0.3s;
+
+  &:hover {
+    background-position-y: bottom;
+  }
 `;
 
 function LastArticles() {

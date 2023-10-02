@@ -18,7 +18,7 @@ export const AuthorsContainer = styled.div`
 
 const slideIn = keyframes`
   from {
-    transform: scale(0.1);
+    transform: scale(0.01);
   }
   to {
     transform: scale(1);
@@ -31,7 +31,7 @@ export const Author = styled.div`
   align-items: center;
   gap: 10px;
   width: 80vw;
-  height: 16vh;
+  height: 17vh;
   border: 3px solid black;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.1);
@@ -42,8 +42,24 @@ export const Author = styled.div`
     animation-delay: ${({ $order }) => `${$order * 0.2 + 0.3}s`};
   }
 
+  @media (hover: none) {
+    &:nth-child(${({ $order }) => $order}) {
+      ${({ $order }) => ($order > 4 ? "display: none;" : "")};
+    }
+
+    @media only screen and (min-width: 100vh) {
+      height: 30vh;
+    }
+  }
+
   @media only screen and (min-width: 600px) {
     width: 40vw;
+  }
+
+  @media only screen and (max-width: 600px) {
+    &:nth-child(${({ $order }) => $order}) {
+      ${({ $order }) => ($order > 4 ? "display: none;" : "")};
+    }
   }
 `;
 
@@ -60,7 +76,7 @@ const AuthorData = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   height: 95%;
 `;
 

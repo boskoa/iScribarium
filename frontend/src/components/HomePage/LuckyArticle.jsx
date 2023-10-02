@@ -46,14 +46,16 @@ const components = {
   h3: (props) => <h3 {...props} style={{ margin: "5px 0" }} />,
 };
 
-const ArticleContainer = styled.div`
+export const ArticleContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   width: calc(90vw - 50px);
   gap: 10px;
   border: 3px solid black;
   border-radius: 5px;
-  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 30px 10px 10px 10px;
   height: 70vh;
   position: relative;
 `;
@@ -62,7 +64,7 @@ const RandomButton = styled.button`
   text-decoration: none;
   cursor: pointer;
   color: ${({ theme }) => theme.main.color};
-  background-color: transparent;
+  background-color: ${({ theme }) => theme.header.bg};
   border: 3px solid black;
   border-radius: 5px;
   padding: 5px;
