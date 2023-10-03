@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ArticleContainer } from "./LuckyArticle";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { LinkContainer, LinkTo } from "./LastArticles";
 
 const CategoriesContainer = styled(ArticleContainer)`
   flex-wrap: wrap;
@@ -21,11 +22,14 @@ function Categories() {
 
   return (
     <CategoriesContainer>
-      {categories.map((c) => (
+      {categories?.map((c) => (
         <p key={c.id}>
           {c.name} {c.count}
         </p>
       ))}
+      <LinkContainer>
+        <LinkTo to="/categories">Sve kategorije</LinkTo>
+      </LinkContainer>
     </CategoriesContainer>
   );
 }

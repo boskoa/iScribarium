@@ -1,42 +1,50 @@
-import { styled } from "styled-components";
+import { keyframes, styled, css } from "styled-components";
 import HomeIcon from "./HomeIcon";
 import { useNavigate } from "react-router-dom";
 import NewArticleIcon from "./NewArticleIcon";
 import AuthorsIcon from "./AuthorsIcon";
+import MenuIcon from "./MenuIcon";
+import { useState } from "react";
+
+const MenuContainer = styled.div`
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  &:hover {
+    height: 200px;
+  }
+`;
+
+const grow = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.1) translateY(150px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+`;
 
 const NavContainer = styled.nav`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 5px 2px;
-  top: 30%;
-  background-color: rgba(0, 0, 255, 0.6);
+  bottom: 50px;
   width: 50px;
-  height: 200px;
-  border-radius: 0px 5px 5px 0px;
-  box-shadow: 0 0 0 3px black;
+  gap: 10px;
   color: white;
-  z-index: 3;
   overflow: hidden;
-  transform: translateX(-45px);
-  transition: all 0.5s;
-
-  &:hover {
-    transform: translateX(0);
-  }
-
-  @media (hover: none) {
-    position: sticky;
-    transform: translateX(0px);
-    top: -6px;
-    left: calc(100% / 2 - 100px);
-    width: 200px;
-    height: 50px;
-    border-radius: 0px 0px 5px 5px;
-    flex-direction: row;
-  }
+  animation: ${() =>
+    css`0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${grow} forwards`};
 `;
 
 const IconContainerWrap = styled.div`
@@ -57,7 +65,7 @@ const IconContainerWrap = styled.div`
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: ${({ $main }) => !$main && "scale(0.95)"};
   }
 `;
 
@@ -75,7 +83,40 @@ const IconContainer = styled.div`
 
 function Nav() {
   const navigate = useNavigate();
+  const [show, setShow] = useState(true);
 
+  return (
+    <MenuContainer
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+    >
+      <IconContainerWrap title="Početna stranica" $lg="black" $main={true}>
+        <IconContainer style={{ backgroundColor: "limegreen" }}>
+          <MenuIcon />
+        </IconContainer>
+        {show && (
+          <NavContainer>
+            <IconContainerWrap title="Početna stranica" $lg="#a00202">
+              <IconContainer onClick={() => navigate("/")}>
+                <HomeIcon />
+              </IconContainer>
+            </IconContainerWrap>
+            <IconContainerWrap title="Autori" $lg="#014301">
+              <IconContainer onClick={() => navigate("/authors")}>
+                <AuthorsIcon />
+              </IconContainer>
+            </IconContainerWrap>
+            <IconContainerWrap title="Novi članak" $lg="#b5ac0a">
+              <IconContainer onClick={() => navigate("/new-article")}>
+                <NewArticleIcon />
+              </IconContainer>
+            </IconContainerWrap>
+          </NavContainer>
+        )}
+      </IconContainerWrap>
+    </MenuContainer>
+  );
+  /*
   return (
     <NavContainer>
       <IconContainerWrap title="Početna stranica" $lg="#a00202">
@@ -95,6 +136,7 @@ function Nav() {
       </IconContainerWrap>
     </NavContainer>
   );
+*/
 }
 
 export default Nav;
