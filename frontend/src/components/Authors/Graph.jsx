@@ -3,7 +3,7 @@ import styled, { useTheme } from "styled-components";
 
 const ChartContainer = styled.div`
   height: 160px;
-  width: 280px;
+  width: 270px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   border: 1px solid teal;

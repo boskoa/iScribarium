@@ -1,10 +1,11 @@
 import { keyframes, styled, css } from "styled-components";
-import HomeIcon from "./HomeIcon";
 import { useNavigate } from "react-router-dom";
 import NewArticleIcon from "./NewArticleIcon";
 import AuthorsIcon from "./AuthorsIcon";
 import MenuIcon from "./MenuIcon";
 import { useState } from "react";
+import CategoriesIcon from "./CategoriesIcon";
+import ArticlesIcon from "./ArticlesIcon";
 
 const MenuContainer = styled.div`
   position: fixed;
@@ -79,11 +80,15 @@ const IconContainer = styled.div`
   padding: 3px;
   background-color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+
+  @media (hover: none) {
+    cursor: default;
+  }
 `;
 
 function Nav() {
   const navigate = useNavigate();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   return (
     <MenuContainer
@@ -91,14 +96,22 @@ function Nav() {
       onMouseLeave={() => setShow(false)}
     >
       <IconContainerWrap title="Početna stranica" $lg="black" $main={true}>
-        <IconContainer style={{ backgroundColor: "limegreen" }}>
+        <IconContainer
+          onClick={(e) => e.stopPropagation()}
+          style={{ backgroundColor: "limegreen" }}
+        >
           <MenuIcon />
         </IconContainer>
         {show && (
           <NavContainer>
-            <IconContainerWrap title="Početna stranica" $lg="#a00202">
-              <IconContainer onClick={() => navigate("/")}>
-                <HomeIcon />
+            <IconContainerWrap title="Članci" $lg="#006c80">
+              <IconContainer onClick={() => navigate("/articles")}>
+                <ArticlesIcon />
+              </IconContainer>
+            </IconContainerWrap>
+            <IconContainerWrap title="Kategorije" $lg="#800080">
+              <IconContainer onClick={() => navigate("/categories")}>
+                <CategoriesIcon />
               </IconContainer>
             </IconContainerWrap>
             <IconContainerWrap title="Autori" $lg="#014301">

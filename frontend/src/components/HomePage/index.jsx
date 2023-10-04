@@ -18,7 +18,7 @@ const ViewPort = styled.div`
   overflow: hidden;
 
   @media (hover: none) {
-    margin-top: -50px;
+    margin-top: 0px;
   }
 `;
 

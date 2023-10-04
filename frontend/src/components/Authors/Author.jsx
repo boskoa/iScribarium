@@ -23,6 +23,8 @@ const Articles = styled.div`
 const Graphs = styled.div`
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 5px;
 `;
 
 const ArticlesContainer = styled.div`
