@@ -33,7 +33,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/count", async (req, res, next) => {
+router.get("/count", async (_req, res, next) => {
   try {
     const categories = await sequelize.query(
       `
@@ -49,6 +49,22 @@ router.get("/count", async (req, res, next) => {
         type: sequelize.QueryTypes.SELECT,
       },
     );
+    return res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/all", async (_req, res, next) => {
+  try {
+    const categories = await Category.findAll({
+      include: {
+        model: Article,
+        attributes: ["id", "title"],
+        order: [["title", "ASC"]],
+      },
+      order: [["name", "ASC"]],
+    });
     return res.status(200).json(categories);
   } catch (error) {
     next(error);

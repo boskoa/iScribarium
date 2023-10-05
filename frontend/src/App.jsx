@@ -17,6 +17,7 @@ const EditArticle = lazy(() => import("./components/EditArticle"));
 const SearchResults = lazy(() => import("./components/SearchResults"));
 const Authors = lazy(() => import("./components/Authors"));
 const Register = lazy(() => import("./components/Register"));
+const Categories = lazy(() => import("./components/Categories"));
 const AuthorSettings = lazy(() => import("./components/AuthorSettings"));
 
 function App() {
@@ -85,6 +86,14 @@ function App() {
           element: (
             <Suspense fallback="Loading">
               <Authors />
+            </Suspense>
+          ),
+        },
+        {
+          path: "categories",
+          element: (
+            <Suspense fallback="Loading">
+              <Categories />
             </Suspense>
           ),
         },

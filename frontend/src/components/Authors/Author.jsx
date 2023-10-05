@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import Graph from "./Graph";
 
-const AuthorContainer = styled.div`
+export const AuthorContainer = styled.div`
   min-height: 80px;
   border: 3px solid black;
   border-radius: 8px;
@@ -11,9 +11,9 @@ const AuthorContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
-const Name = styled.h4``;
+export const Name = styled.h4``;
 
-const Articles = styled.div`
+export const Articles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -27,7 +27,7 @@ const Graphs = styled.div`
   gap: 5px;
 `;
 
-const ArticlesContainer = styled.div`
+export const ArticlesContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -35,14 +35,14 @@ const ArticlesContainer = styled.div`
   z-index: 1;
 `;
 
-const Article = styled(Link)`
+export const Article = styled(Link)`
   font-size: 14px;
   text-decoration: none;
   width: 100px;
   color: ${({ theme }) => theme.main.color};
 `;
 
-const ArticleCount = styled.div`
+export const ArticleCount = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;

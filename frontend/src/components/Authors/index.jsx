@@ -10,14 +10,14 @@ import { useEffect, useRef, useState } from "react";
 import Author from "./Author";
 import useIntersectionObserver from "../../customHooks/useIntersectionObserver";
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   margin: 40px 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
-const Filters = styled.div`
+export const Filters = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,7 +25,7 @@ const Filters = styled.div`
   padding: 10px;
 `;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   padding: 5px;
   border: 3px solid ${({ $selected }) => ($selected ? "lime" : "black")};
   border-radius: 5px;
@@ -48,7 +48,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const AuthorsContainer = styled.div`
+export const AuthorsContainer = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@ const AuthorsContainer = styled.div`
   flex: 1;
 `;
 
-const Title = styled.h2``;
+export const Title = styled.h2``;
 
 const SpinnerContainer = styled.div`
   display: flex;

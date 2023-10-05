@@ -23,7 +23,7 @@ const MenuContainer = styled.div`
 
 const grow = keyframes`
   from {
-    opacity: 0;
+    opacity: 0.1;
     transform: scale(0.1) translateY(150px);
   }
   to {
@@ -38,12 +38,12 @@ const NavContainer = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 2px;
   bottom: 50px;
   width: 50px;
   gap: 10px;
   color: white;
   overflow: hidden;
+  transform-origin: center 70%;
   animation: ${() =>
     css`0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${grow} forwards`};
 `;
@@ -95,7 +95,7 @@ function Nav() {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <IconContainerWrap title="Početna stranica" $lg="black" $main={true}>
+      <IconContainerWrap title="Meni" $lg="black" $main={true}>
         <IconContainer
           onClick={(e) => e.stopPropagation()}
           style={{ backgroundColor: "limegreen" }}
