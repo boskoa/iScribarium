@@ -58,7 +58,7 @@ export const AuthorsContainer = styled.div`
 
 export const Title = styled.h2``;
 
-const SpinnerContainer = styled.div`
+export const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

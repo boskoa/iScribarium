@@ -7,12 +7,12 @@ import remarkGfm from "remark-gfm";
 import { Link } from "react-router-dom";
 
 const components = {
-  img: ({ alt, src, title }) => (
+  img: ({ alt, title }) => (
     <img
       alt={alt}
-      src={src}
       title={title}
       style={{
+        display: "none",
         maxWidth: "100%",
         minWidth: 180,
         maxHeight: 400,

@@ -61,9 +61,11 @@ router.get("/all", async (_req, res, next) => {
       include: {
         model: Article,
         attributes: ["id", "title"],
-        order: [["title", "ASC"]],
       },
-      order: [["name", "ASC"]],
+      order: [
+        ["name", "ASC"],
+        [Article, "title", "ASC"],
+      ],
     });
     return res.status(200).json(categories);
   } catch (error) {

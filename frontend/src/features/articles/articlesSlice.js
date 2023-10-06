@@ -7,9 +7,7 @@ import axios from "axios";
 
 export const BASE_URL = "/api/articles";
 
-const articlesAdapter = createEntityAdapter({
-  sortComparer: (a, b) => b.id - a.id,
-});
+const articlesAdapter = createEntityAdapter();
 
 const initialState = articlesAdapter.getInitialState({
   loading: false,
@@ -85,6 +83,10 @@ const articlesSlice = createSlice({
     },
     resetDeleted: (state) => {
       state.deleted = null;
+    },
+    resetArticles: (state) => {
+      state.ids = [];
+      state.entities = {};
     },
   },
   extraReducers: (builder) => {
@@ -169,6 +171,7 @@ export function selectDeletedArticle(state) {
   return state.articles.deleted;
 }
 
-export const { resetLastCreated, resetDeleted } = articlesSlice.actions;
+export const { resetLastCreated, resetDeleted, resetArticles } =
+  articlesSlice.actions;
 
 export default articlesSlice.reducer;

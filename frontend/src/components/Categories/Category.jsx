@@ -27,7 +27,7 @@ function Category({ category }) {
         <Articles>
           <ArticlesContainer>
             {category.articles?.map((a) => (
-              <Article to={`/articles/${a.title}`} key={a.id}>
+              <Article to={`/articles/${a.id}`} key={a.id}>
                 {a.title}
               </Article>
             ))}

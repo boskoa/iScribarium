@@ -39,6 +39,7 @@ export const Article = styled(Link)`
   font-size: 14px;
   text-decoration: none;
   width: 100px;
+  overflow: hidden;
   color: ${({ theme }) => theme.main.color};
 `;
 

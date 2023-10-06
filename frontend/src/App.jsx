@@ -1,6 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./components/HomePage";
@@ -18,6 +17,7 @@ const SearchResults = lazy(() => import("./components/SearchResults"));
 const Authors = lazy(() => import("./components/Authors"));
 const Register = lazy(() => import("./components/Register"));
 const Categories = lazy(() => import("./components/Categories"));
+const Articles = lazy(() => import("./components/Articles"));
 const AuthorSettings = lazy(() => import("./components/AuthorSettings"));
 
 function App() {
@@ -94,6 +94,14 @@ function App() {
           element: (
             <Suspense fallback="Loading">
               <Categories />
+            </Suspense>
+          ),
+        },
+        {
+          path: "articles",
+          element: (
+            <Suspense fallback="Loading">
+              <Articles />
             </Suspense>
           ),
         },

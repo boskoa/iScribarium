@@ -29,14 +29,14 @@ function Categories() {
       const countB = b.articles.length || 0;
 
       if (criterium == "name") {
-        if (order === "asc") {
+        if (order === "desc") {
           return b.name.localeCompare(a.name);
         } else {
           return a.name.localeCompare(b.name);
         }
       } else {
         console.log("CRITER", criterium, countA - countB);
-        if (order === "desc") {
+        if (order === "asc") {
           console.log("DESC", order);
           return countA - countB;
         } else {
@@ -46,7 +46,7 @@ function Categories() {
       }
     }
 
-    setCategories((p) => p.sort(sortCategories));
+    setCategories((p) => [...p].sort(sortCategories));
   }, [criterium, order]);
 
   if (!categories) return "Loading...";
