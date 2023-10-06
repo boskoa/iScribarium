@@ -7,6 +7,7 @@ import { BASE_URL } from "../../features/articles/articlesSlice";
 import useTimedMessage from "../../customHooks/useTimedMessage";
 import { styled } from "styled-components";
 import EditArticleIcon from "./EditArticleIcon";
+import LinkCloud from "./LinkCloud";
 
 const components = {
   img: ({ alt, src, title }) => (
@@ -36,7 +37,9 @@ const components = {
       {...props}
     />
   ),
-  a: (props) => <a {...props} style={{ textDecoration: "none" }} />,
+  a: (props) => (
+    <a {...props} className="link" style={{ textDecoration: "none" }} />
+  ),
   p: (props) => (
     <p {...props} style={{ textAlign: "justify", marginBottom: 15 }} />
   ),
@@ -68,6 +71,7 @@ export const Title = styled.h1`
 function ArticlePage() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
+  const [cloud, setCloud] = useState();
   const addMessage = useTimedMessage();
   const navigate = useNavigate();
 
@@ -87,15 +91,30 @@ function ArticlePage() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    setTimeout(() => {
+      document.querySelectorAll(".link").forEach((a) =>
+        a.addEventListener("mouseenter", (e) => {
+          const arr = e.target.getAttribute("href").split("/");
+          setCloud(arr[arr.length - 1]);
+          console.log("FOO", arr[arr.length - 1]);
+        }),
+      );
+    }, 300);
   }, []);
 
   return (
     <ArticleContainer>
       <Title>{article?.title}</Title>
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown
+        id="markdown"
+        components={components}
+        remarkPlugins={[remarkGfm]}
+      >
         {article?.content}
       </ReactMarkdown>
       <EditArticleIcon articleId={id} />
+      {cloud && <LinkCloud id={cloud} />}
     </ArticleContainer>
   );
 }
