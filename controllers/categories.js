@@ -76,7 +76,7 @@ router.get("/all", async (_req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const category = await Category.findByPk(req.params.id, {
-      include: Article,
+      include: { model: Article, attributes: ["id", "title"] },
     });
     return res.status(200).json(category);
   } catch (error) {

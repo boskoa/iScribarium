@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BASE_URL } from "../../features/articles/articlesSlice";
 import { styled } from "styled-components";
+import stripMarkdown from "../../utils/stripMarkdown";
 
 const SearchedContainer = styled.div`
   margin: 50px 20px 20px 20px;
@@ -29,16 +30,6 @@ function SearchResults() {
   const { title } = useParams();
   const [existingArticles, setExistingArticles] = useState(null);
   const results = existingArticles?.map((a) => stripMarkdown(a));
-
-  function stripMarkdown(article) {
-    return {
-      id: article.id,
-      title: article.title,
-      content:
-        article.content?.split("## Uvod")[1]?.split(".")[0].trim() ||
-        article.content.split(".")[0],
-    };
-  }
 
   useEffect(() => {
     async function checkTitles() {

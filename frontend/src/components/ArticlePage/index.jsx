@@ -70,7 +70,13 @@ export const Title = styled.h1`
 
 function ArticlePage() {
   const { id } = useParams();
-  const [article, setArticle] = useState(null);
+  const [article, setArticle] = useState({
+    id: null,
+    top: null,
+    left: null,
+    height: null,
+    width: null
+  });
   const [cloud, setCloud] = useState();
   const addMessage = useTimedMessage();
   const navigate = useNavigate();
@@ -92,15 +98,26 @@ function ArticlePage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    setTimeout(() => {
-      document.querySelectorAll(".link").forEach((a) =>
+    const index = setTimeout(() => {
+      document.querySelectorAll(".link").forEach((a) => {
         a.addEventListener("mouseenter", (e) => {
           const arr = e.target.getAttribute("href").split("/");
-          setCloud(arr[arr.length - 1]);
-          console.log("FOO", arr[arr.length - 1]);
-        }),
-      );
-    }, 300);
+          const position = e.target.getBoundingClientRect();
+          setCloud({
+            id: arr[arr.length - 1],
+            top: position.top,
+            left: position.left,
+            height: position.height,
+            width: position.width,
+          });
+        });
+        a.addEventListener("mouseleave", () => {
+          setCloud((p) => ({ ...p, id: null }));
+        });
+      });
+    }, 500);
+
+    return () => clearTimeout(index);
   }, []);
 
   return (
@@ -114,7 +131,7 @@ function ArticlePage() {
         {article?.content}
       </ReactMarkdown>
       <EditArticleIcon articleId={id} />
-      {cloud && <LinkCloud id={cloud} />}
+      <LinkCloud cloud={cloud} />
     </ArticleContainer>
   );
 }

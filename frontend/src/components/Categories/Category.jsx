@@ -1,11 +1,16 @@
+import styled from "styled-components";
 import {
   Article,
   ArticleCount,
   Articles,
   ArticlesContainer,
   AuthorContainer as CategoryContainer,
-  Name,
 } from "../Authors/Author";
+import { LinkTo } from "../HomePage/LastArticles";
+
+const Name = styled(LinkTo)`
+  font-weight: 600;
+`;
 
 function Category({ category }) {
   if (!category) return;
@@ -14,7 +19,7 @@ function Category({ category }) {
 
   return (
     <CategoryContainer>
-      <Name>{category.name}</Name>
+      <Name to={`/categories/${category.id}`}>{category.name}</Name>
       <ArticleCount>
         {count}{" "}
         {count === 1

@@ -9,6 +9,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Author from "./Author";
 import useIntersectionObserver from "../../customHooks/useIntersectionObserver";
+import Loading from "../Loading";
 
 export const MainContainer = styled.div`
   margin: 40px 10px;
@@ -148,10 +149,7 @@ function Authors() {
           <Author key={a.id} author={a} />
         ))}
       </AuthorsContainer>
-      <SpinnerContainer ref={endRef}>
-        {loading && "Loading authors"}
-      </SpinnerContainer>
-      {/*put spinner later*/}
+      <SpinnerContainer ref={endRef}>{loading && <Loading />}</SpinnerContainer>
     </MainContainer>
   );
 }

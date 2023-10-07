@@ -15,6 +15,7 @@ import {
 } from "../Authors";
 import { Article, AuthorContainer } from "../Authors/Author";
 import styled from "styled-components";
+import Loading from "../Loading";
 
 const ArticlesContainer = styled(AuthorContainer)`
   min-height: 90vh;
@@ -82,10 +83,7 @@ function Articles() {
           </Article>
         ))}
       </ArticlesContainer>
-      <SpinnerContainer ref={endRef}>
-        {loading && "Loading authors"}
-      </SpinnerContainer>
-      {/*put spinner later*/}
+      <SpinnerContainer ref={endRef}>{loading && <Loading />}</SpinnerContainer>
     </MainContainer>
   );
 }

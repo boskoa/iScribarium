@@ -8,6 +8,7 @@ import Assistant from "./components/Assistant";
 import { getAllArticles } from "./features/articles/articlesSlice";
 import { ThemeProvider } from "styled-components";
 import { dark, light } from "./themes";
+import Loading from "./components/Loading";
 
 const Login = lazy(() => import("./components/Login"));
 const NewArticle = lazy(() => import("./components/NewArticle"));
@@ -16,6 +17,7 @@ const EditArticle = lazy(() => import("./components/EditArticle"));
 const SearchResults = lazy(() => import("./components/SearchResults"));
 const Authors = lazy(() => import("./components/Authors"));
 const Register = lazy(() => import("./components/Register"));
+const Category = lazy(() => import("./components/Category"));
 const Categories = lazy(() => import("./components/Categories"));
 const Articles = lazy(() => import("./components/Articles"));
 const AuthorSettings = lazy(() => import("./components/AuthorSettings"));
@@ -84,8 +86,16 @@ function App() {
         {
           path: "authors",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <Authors />
+            </Suspense>
+          ),
+        },
+        {
+          path: "categories/:id",
+          element: (
+            <Suspense fallback="Loading">
+              <Category />
             </Suspense>
           ),
         },

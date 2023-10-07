@@ -23,9 +23,9 @@ function Categories() {
   return (
     <CategoriesContainer>
       {categories?.map((c) => (
-        <p key={c.id}>
+        <LinkTo style={{ width: "50%" }} to={`/categories/${c.id}`} key={c.id}>
           {c.name} {c.count}
-        </p>
+        </LinkTo>
       ))}
       <LinkContainer>
         <LinkTo to="/categories">Sve kategorije</LinkTo>
