@@ -29,7 +29,7 @@ export const Helper = styled.div`
   border-radius: 8px;
   flex: 1;
   font-size: 14px;
-  height: 300px;
+  height: 320px;
   padding: 10px;
   position: sticky;
   top: 10px;
@@ -60,6 +60,13 @@ function NewArticle() {
           </p>
           <p>
             |<i>naslov slike</i>|
+          </p>
+          <br />
+          <p>
+            (<i>linkovanje</i>)
+          </p>
+          <p>
+            [<i>tekst linka</i>](<i>/articles/:id</i>)
           </p>
         </Helper>
       </ArticleContainer>

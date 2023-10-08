@@ -32,6 +32,13 @@ function EditArticle() {
           <p>
             |<i>naslov slike</i>|
           </p>
+          <br />
+          <p>
+            (<i>linkovanje</i>)
+          </p>
+          <p>
+            [<i>tekst linka</i>](<i>/articles/:id</i>)
+          </p>
         </Helper>
       </ArticleContainer>
     </NewArticleContainer>

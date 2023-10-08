@@ -68,6 +68,12 @@ export const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
+const Id = styled.p`
+  color: #528a8a;
+  margin-top: 10px;
+  font-size: 12;
+`;
+
 function ArticlePage() {
   const { id } = useParams();
   const [article, setArticle] = useState({
@@ -75,7 +81,7 @@ function ArticlePage() {
     top: null,
     left: null,
     height: null,
-    width: null
+    width: null,
   });
   const [cloud, setCloud] = useState();
   const addMessage = useTimedMessage();
@@ -122,7 +128,7 @@ function ArticlePage() {
 
   return (
     <ArticleContainer>
-      <Title>{article?.title}</Title>
+      <Title title={`ID: ${article.id}`}>{article?.title}</Title>
       <ReactMarkdown
         id="markdown"
         components={components}
@@ -130,6 +136,9 @@ function ArticlePage() {
       >
         {article?.content}
       </ReactMarkdown>
+      <Id>
+        <i>ID: {article.id}</i>
+      </Id>
       <EditArticleIcon articleId={id} />
       <LinkCloud cloud={cloud} />
     </ArticleContainer>

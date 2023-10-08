@@ -54,7 +54,7 @@ function App() {
         {
           path: "new-article",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <NewArticle />
             </Suspense>
           ),
@@ -62,7 +62,7 @@ function App() {
         {
           path: "articles/:id",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <ArticlePage />
             </Suspense>
           ),
@@ -70,7 +70,7 @@ function App() {
         {
           path: "edit-article/:id",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <EditArticle />
             </Suspense>
           ),
@@ -78,7 +78,7 @@ function App() {
         {
           path: "searched/:title",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <SearchResults />
             </Suspense>
           ),
@@ -94,7 +94,7 @@ function App() {
         {
           path: "categories/:id",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <Category />
             </Suspense>
           ),
@@ -102,7 +102,7 @@ function App() {
         {
           path: "categories",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <Categories />
             </Suspense>
           ),
@@ -110,7 +110,7 @@ function App() {
         {
           path: "articles",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <Articles />
             </Suspense>
           ),
@@ -118,7 +118,7 @@ function App() {
         {
           path: "authors/settings",
           element: (
-            <Suspense fallback="Loading">
+            <Suspense fallback={<Loading />}>
               <AuthorSettings />
             </Suspense>
           ),
