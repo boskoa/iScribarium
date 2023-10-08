@@ -6,6 +6,7 @@ import MenuIcon from "./MenuIcon";
 import { useState } from "react";
 import CategoriesIcon from "./CategoriesIcon";
 import ArticlesIcon from "./ArticlesIcon";
+import AdminIcon from "./AdminIcon";
 
 const MenuContainer = styled.div`
   position: fixed;
@@ -104,6 +105,11 @@ function Nav() {
         </IconContainer>
         {show && (
           <NavContainer>
+            <IconContainerWrap title="Admin" $lg="#dd0000">
+              <IconContainer onClick={() => navigate("/admin")}>
+                <AdminIcon />
+              </IconContainer>
+            </IconContainerWrap>
             <IconContainerWrap title="Članci" $lg="#006c80">
               <IconContainer onClick={() => navigate("/articles")}>
                 <ArticlesIcon />

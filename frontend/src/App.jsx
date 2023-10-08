@@ -142,7 +142,7 @@ function App() {
     }
 
     const previousTheme = window.localStorage.getItem("iScribariumTheme");
-    setTheme(previousTheme);
+    if (previousTheme) setTheme(previousTheme);
   }, [dispatch]);
 
   useEffect(() => {

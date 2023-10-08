@@ -84,6 +84,12 @@ const DataField = styled.p`
   font-size: 12px;
 `;
 
+function getLastUpdate(author) {
+  const updates = author.articles.map((a) => a.f5);
+  updates.sort((a, b) => new Date(b) - new Date(a));
+  return updates[0] ? updates[0] : author.created_at;
+}
+
 function Authors() {
   const authors = useSelector(selectAllAuthors);
   const dispatch = useDispatch();
@@ -113,7 +119,7 @@ function Authors() {
               Član od: {new Date(a.created_at).toLocaleDateString("de-DE")}
             </DataField>
             <DataField>
-              Aktivan: {new Date(a.updated_at).toLocaleDateString("de-DE")}
+              Aktivan: {new Date(getLastUpdate(a)).toLocaleDateString("de-DE")}{" "}
             </DataField>
           </AuthorData>
         </Author>

@@ -44,6 +44,11 @@ const HelmContainer = styled.img`
   left: calc(50% - 100px);
   z-index: 100;
   opacity: 1;
+  cursor: pointer;
+
+  @media (hover: none) {
+    cursor: default;
+  }
 `;
 
 const SectionContainer = styled.div``;

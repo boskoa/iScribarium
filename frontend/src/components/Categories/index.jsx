@@ -35,12 +35,9 @@ function Categories() {
           return a.name.localeCompare(b.name);
         }
       } else {
-        console.log("CRITER", criterium, countA - countB);
         if (order === "asc") {
-          console.log("DESC", order);
           return countA - countB;
         } else {
-          console.log("ASC", order);
           return countB - countA;
         }
       }
