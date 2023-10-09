@@ -18,7 +18,17 @@ describe("Testing the testRouter", () => {
 describe("Testing the articles router", () => {
   test("Returns an article", async () => {
     const response = await supertest(app).get("/api/articles");
+    expect(response.statusCode).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
     expect(response.body[0].title).toBeDefined();
+  });
+});
+
+describe("Testing the authors router", () => {
+  test("Returns an author", async () => {
+    const response = await supertest(app).get("/api/authors");
+    expect(response.statusCode).toBe(200);
+    expect(response.body.length).toBeGreaterThan(0);
+    expect(response.body[0].username).toBeDefined();
   });
 });

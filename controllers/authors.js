@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const { Author, Article } = require("../models");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
@@ -36,8 +37,16 @@ router.get("/", async (req, res, next) => {
       FROM authors
       LEFT JOIN articles ON authors.id=articles.author_id
       GROUP BY authors.id
-      ORDER BY ${order[0][0]} ${order[0][1]}, ${order[1][0]} ${order[1][1]}
-      LIMIT ${pagination.limit} OFFSET ${pagination.offset}
+      ${
+        order.length
+          ? `ORDER BY ${order[0][0]} ${order[0][1]}, ${order[1][0]} ${order[1][1]}`
+          : ""
+      }
+      ${
+        Object.keys(pagination).length
+          ? `LIMIT ${pagination.limit} OFFSET ${pagination.offset}`
+          : ""
+      }
       `,
       {
         type: sequelize.QueryTypes.SELECT,

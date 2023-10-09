@@ -45,7 +45,7 @@ function Loading() {
 
   return (
     again && (
-      <BubblesContainer $again={again}>
+      <BubblesContainer data-testid="loading" $again={again}>
         <Bubble color={COLORS[0]} id={0}>
           <svg
             width="100%"
