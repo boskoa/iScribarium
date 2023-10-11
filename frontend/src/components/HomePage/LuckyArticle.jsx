@@ -105,7 +105,9 @@ function LuckyArticle() {
         {article?.content}
       </ReactMarkdown>
       <LinkContainer>
-        <LinkTo to={`/articles/${article.id}`}>Opširnije</LinkTo>
+        <LinkTo data-cyid="lucky" to={`/articles/${article.id}`}>
+          Opširnije
+        </LinkTo>
       </LinkContainer>
     </ArticleContainer>
   );

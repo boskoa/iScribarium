@@ -147,6 +147,7 @@ function UserData() {
   return (
     <LoginForm onSubmit={handleSubmit(handleLogin)}>
       <LoginInput
+        name="username"
         type="text"
         placeholder="korisničko ime"
         {...register("username", {
@@ -158,6 +159,7 @@ function UserData() {
         })}
       />
       <LoginInput
+        name="password"
         type="password"
         placeholder="lozinka"
         {...register("password", {

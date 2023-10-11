@@ -29,7 +29,10 @@ function EditArticleIcon({ articleId }) {
   const navigate = useNavigate();
 
   return (
-    <IconContainer onClick={() => navigate(`/edit-article/${articleId}`)}>
+    <IconContainer
+      data-cyid="edit"
+      onClick={() => navigate(`/edit-article/${articleId}`)}
+    >
       <EditIcon />
     </IconContainer>
   );

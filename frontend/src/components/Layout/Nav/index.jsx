@@ -136,27 +136,6 @@ function Nav() {
       </IconContainerWrap>
     </MenuContainer>
   );
-  /*
-  return (
-    <NavContainer>
-      <IconContainerWrap title="Početna stranica" $lg="#a00202">
-        <IconContainer onClick={() => navigate("/")}>
-          <HomeIcon />
-        </IconContainer>
-      </IconContainerWrap>
-      <IconContainerWrap title="Autori" $lg="#014301">
-        <IconContainer onClick={() => navigate("/authors")}>
-          <AuthorsIcon />
-        </IconContainer>
-      </IconContainerWrap>
-      <IconContainerWrap title="Novi članak" $lg="#b5ac0a">
-        <IconContainer onClick={() => navigate("/new-article")}>
-          <NewArticleIcon />
-        </IconContainer>
-      </IconContainerWrap>
-    </NavContainer>
-  );
-*/
 }
 
 export default Nav;
