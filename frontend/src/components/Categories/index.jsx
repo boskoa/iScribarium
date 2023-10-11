@@ -53,6 +53,7 @@ function Categories() {
       <Title>Kategorije</Title>
       <Filters>
         <ButtonContainer
+          data-testid="name"
           $selected={criterium === "name"}
           onClick={() => {
             setCriterium("name");
