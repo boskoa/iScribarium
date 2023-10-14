@@ -2,14 +2,14 @@ const Sequelize = require("sequelize");
 const { SequelizeStorage, Umzug } = require("umzug");
 const { DATABASE_URL, PRODUCTION_DATABASE_URL } = require("./config");
 
-const sequelize = new Sequelize(
+const dataBase =
   process.env.NODE_ENV === "production"
     ? PRODUCTION_DATABASE_URL
-    : DATABASE_URL,
-  {
-    dialect: "postgres",
-  },
-);
+    : DATABASE_URL;
+console.log("FOOOOOOOOOOOOOOOO", dataBase);
+const sequelize = new Sequelize(dataBase, {
+  dialect: "postgres",
+});
 
 const migrtationsConf = {
   migrations: {
