@@ -4,6 +4,7 @@ module.exports = {
     commonjs: true,
     es2021: true,
     jest: true,
+    "cypress/globals": true,
   },
   extends: ["eslint:recommended", "prettier"],
   overrides: [
@@ -31,4 +32,5 @@ module.exports = {
     "arrow-spacing": ["error", { before: true, after: true }],
     "no-console": 0,
   },
+  plugins: ["react-refresh", "cypress"],
 };

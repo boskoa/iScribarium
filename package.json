@@ -9,13 +9,17 @@
     "build:ui": "rm -rf dist && cd ./frontend/ && npm run build && cp -r dist ..",
     "install-packages": "npm install && cd ./frontend/ && npm install",
     "dev": "NODE_ENV=development nodemon index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "author": "Bosko A.",
   "license": "ISC",
   "devDependencies": {
+    "cypress": "^13.3.1",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "jest": "^29.7.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.0",
