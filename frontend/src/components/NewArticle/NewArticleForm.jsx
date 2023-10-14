@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedAuthor } from "../../features/login/loginSlice";
 import useTimedMessage from "../../customHooks/useTimedMessage";
@@ -91,7 +90,6 @@ function NewArticleForm() {
     handleSubmit,
     formState: { errors },
     reset,
-    control,
   } = useForm({ mode: "onBlur" });
 
   function handleCreateArticle(data) {
@@ -192,7 +190,6 @@ function NewArticleForm() {
       <Button $bg="green" type="submit">
         Sačuvaj
       </Button>
-      <DevTool control={control} />
       {showModal && <CancelModal setShowModal={setShowModal} reset={reset} />}
     </StyledNewArticleForm>
   );

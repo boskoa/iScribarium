@@ -17,7 +17,7 @@ describe("Testing HomePage component", () => {
     });
 
     it("can log in", function () {
-      cy.get("[name='username']").type("jorgovanka");
+      cy.get("[name='username']").type("test");
       cy.get("[name='password']").type("lozinka");
       cy.contains(/prijava/i).click();
       cy.get("[alt='user avatar']").parent().click().contains("profil");

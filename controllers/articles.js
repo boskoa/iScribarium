@@ -91,6 +91,12 @@ router.post("/", tokenExtractor, async (req, res, next) => {
     return res.status(401).json({ error: "Missing token" });
   }
 
+  if (!author.approved) {
+    return res.status(401).json({
+      error: "Not authorized for this action yet. Contact admin, please.",
+    });
+  }
+
   try {
     const newArticle = await Article.create({ ...req.body.article });
     if (req.body.categories) {
@@ -116,15 +122,10 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
   const author = await Author.findByPk(req.decodedToken.id);
   const article = await Article.findByPk(req.params.id);
 
-  if (!author || author.id !== article.authorId) {
-    return res.status(401).json({ error: "Missing token" });
-  }
-
-  if (author.username !== "seco") {
-    //promeniti u iskra
+  if ((!author || author.id !== article.authorId) && !author.admin) {
     return res
       .status(401)
-      .json({ error: "Server says: Only Iskra can edit articles. For now." });
+      .json({ error: "You are not authorized for this action." });
   }
 
   if (!req.body) {
@@ -159,15 +160,10 @@ router.delete("/:id", tokenExtractor, async (req, res, next) => {
   const author = await Author.findByPk(req.decodedToken.id);
   const article = await Article.findByPk(req.params.id);
 
-  if (!author || author.id !== article.authorId) {
-    return res.status(401).json({ error: "Missing token" });
-  }
-
-  if (author.username !== "seco") {
-    //promeniti u iskra
+  if ((!author || author.id !== article.authorId) && !author.admin) {
     return res
       .status(401)
-      .json({ error: "Server says: Only Iskra can edit articles. For now." });
+      .json({ error: "You are not authorized for this action." });
   }
 
   if (article.categories?.length) {

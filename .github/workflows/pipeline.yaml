@@ -23,3 +23,8 @@ jobs:
         run: npm run build:ui
       - name: Vitest frontend testing
         run: cd frontend && npm run test
+      - name: e2e testing
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run start
+          wait-on: "http://localhost:3003"

@@ -126,7 +126,9 @@ router.post("/", async (req, res, next) => {
 });
 
 router.patch("/:id", tokenExtractor, async (req, res, next) => {
-  if (Number(req.params.id) !== req.decodedToken.id) {
+  const changer = await Author.findByPk(req.decodedToken.id);
+
+  if (Number(req.params.id) !== req.decodedToken.id && !changer?.admin) {
     return res.status(401).json({ error: "Not authorized" });
   }
 
@@ -154,10 +156,11 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
 });
 
 //Not necessary
-router.delete("/:id", async (req, res, next) => {
-  const authorization = req.get("Authorization");
-  if (authorization !== "haimark") {
-    return res.status(401).json({ error: "You are not authorized" });
+router.delete("/:id", tokenExtractor, async (req, res, next) => {
+  const changer = await Author.findByPk(req.decodedToken.id);
+
+  if (!changer?.admin) {
+    return res.status(401).json({ error: "Not authorized" });
   }
 
   try {

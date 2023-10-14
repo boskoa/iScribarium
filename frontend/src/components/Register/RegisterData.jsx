@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { styled, keyframes, css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useTimedMessage from "../../customHooks/useTimedMessage";
-import { DevTool } from "@hookform/devtools";
 import { selectId } from "../../features/login/loginSlice";
 import {
   createAuthor,
@@ -108,7 +107,6 @@ function RegisterData() {
     register,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm({ mode: "onBlur" });
 
   function handleRegister(data) {
@@ -238,7 +236,6 @@ function RegisterData() {
       >
         Nazad
       </ButtonContainer>
-      <DevTool control={control} />
     </LoginForm>
   );
 }

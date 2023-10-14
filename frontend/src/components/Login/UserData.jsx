@@ -10,7 +10,6 @@ import {
 } from "../../features/login/loginSlice";
 import { useNavigate } from "react-router-dom";
 import useTimedMessage from "../../customHooks/useTimedMessage";
-import { DevTool } from "@hookform/devtools";
 
 const LoginForm = styled.form`
   display: flex;
@@ -104,7 +103,6 @@ function UserData() {
     register,
     handleSubmit,
     formState: { errors },
-    control,
   } = useForm({ mode: "onBlur" });
 
   function handleLogin(data) {
@@ -189,7 +187,6 @@ function UserData() {
       >
         Nazad
       </ButtonContainer>
-      <DevTool control={control} />
     </LoginForm>
   );
 }
