@@ -4,7 +4,7 @@
   "description": "encyclopedia",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose --runInBand",
+    "test": "jest --verbose --runInBand ./tests",
     "start": "node index.js",
     "build:ui": "rm -rf dist && cd ./frontend/ && npm run build && cp -r dist ..",
     "install-packages": "npm install && cd ./frontend/ && npm install",
