@@ -67,6 +67,7 @@ const defaultStore = {
       ],
     },
   ],
+  login: {},
 };
 
 describe("Testing Nav component", () => {
