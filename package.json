@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --verbose --runInBand",
     "start": "node index.js",
+    "build:ui": "rm -rf dist && cd ./frontend/ && npm run build && cp -r dist ..",
     "dev": "nodemon index.js"
   },
   "author": "Bosko A.",

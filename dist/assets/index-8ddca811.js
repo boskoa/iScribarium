@@ -1,0 +1,5 @@
+import{n as u,b as m,r,j as a,F as f,m as g}from"./index-bdd633cb.js";import{M as x,T as c,A as h}from"./index-b89d6e88.js";const y=u(h)`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-evenly;
+`;function j(o){let e={};for(const i of o){const s=i.title[0].toLowerCase();e[s]||(e[s]=[]),e[s].push(i)}return e}function b(){const{id:o}=m(),[e,i]=r.useState(""),[s,d]=r.useState({}),[l,p]=r.useState(0);return r.useEffect(()=>{async function n(){const t=await g.get(`/api/categories/${o}`);i(t.data.name),d(j(t.data.articles)),p(t.data.articles.length)}window.scrollTo({top:0,behavior:"smooth"}),o&&n()},[o]),a.jsxs(x,{children:[a.jsxs(c,{style:{marginBottom:20},children:["Kategorija: ",e," (",l," ",l===1?"članak":[2,3,4].includes(l)?"članka":"članaka",")"]}),[...Object.keys(s)].map(n=>a.jsxs("div",{style:{marginBottom:10},children:[a.jsx(c,{children:n.toUpperCase()}),a.jsx(y,{children:s[n].map(t=>a.jsx(f,{to:`/articles/${t.id}`,style:{display:"inline-block",width:"32%"},children:t.title},t.id))})]},n))]})}export{b as default};
