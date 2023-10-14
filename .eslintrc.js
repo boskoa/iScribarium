@@ -32,5 +32,5 @@ module.exports = {
     "arrow-spacing": ["error", { before: true, after: true }],
     "no-console": 0,
   },
-  plugins: ["react-refresh", "cypress"],
+  plugins: ["cypress"],
 };
