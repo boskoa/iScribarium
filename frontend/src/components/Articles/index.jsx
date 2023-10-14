@@ -20,6 +20,7 @@ import Loading from "../Loading";
 const ArticlesContainer = styled(AuthorContainer)`
   min-height: 90vh;
   display: flex;
+  align-content: start;
   gap: 20px;
   flex-wrap: wrap;
 `;

@@ -1,4 +1,4 @@
-import{n as s,j as i}from"./index-2ddb8e57.js";import{N as e}from"./NewArticleForm-c13a6a2f.js";import"./index.esm-c6d4536d.js";const n=s.div`
+import{n as s,j as i}from"./index-75c58116.js";import{N as e}from"./NewArticleForm-d7d2f0bb.js";import"./index.esm-22e08e3a.js";const n=s.div`
   margin: 20px;
   flex: 1;
 `,r=s.h3`

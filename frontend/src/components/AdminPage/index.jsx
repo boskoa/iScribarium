@@ -64,7 +64,7 @@ function AdminPage() {
   if (!authors.length) return <Loading />;
 
   return (
-    <AuthorsContainer>
+    <AuthorsContainer style={{ paddingTop: 40 }}>
       {authors?.map((a) => (
         <Author style={{ minHeight: 0 }} key={a.id}>
           <Name>{a.username}</Name>
