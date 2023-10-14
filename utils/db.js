@@ -3,9 +3,9 @@ const { SequelizeStorage, Umzug } = require("umzug");
 const { DATABASE_URL, PRODUCTION_DATABASE_URL } = require("./config");
 
 const dataBase =
-  process.env.NODE_ENV === "production"
-    ? PRODUCTION_DATABASE_URL
-    : DATABASE_URL;
+  process.env.NODE_ENV === "development"
+    ? DATABASE_URL
+    : PRODUCTION_DATABASE_URL;
 console.log("FOOOOOOOOOOOOOOOO", dataBase);
 const sequelize = new Sequelize(dataBase, {
   dialect: "postgres",
