@@ -93,7 +93,7 @@ router.post("/", tokenExtractor, async (req, res, next) => {
 
   if (!author.approved) {
     return res.status(401).json({
-      error: "Not authorized for this action yet. Contact admin, please.",
+      error: "Not authorized for this action yet. Please, contact admin.",
     });
   }
 

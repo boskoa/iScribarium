@@ -33,3 +33,26 @@ jobs:
         with:
           start: npm run start
           wait-on: "http://localhost:3003"
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') && !contains(join(toJson(github.event.commits.*.message), ' '), '#minor') && !contains(join(toJson(github.event.commits.*.message), ' '), '#major') }}
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISCRIBARIUM_TOKEN }}
+          DEFAULT_BUMP: patch
+      - name: Bump minor version and push tag
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') && contains(join(toJson(github.event.commits.*.message), ' '), '#minor') }}
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISCRIBARIUM_TOKEN }}
+          DEFAULT_BUMP: minor
+      - name: Bump major version and push tag
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') && contains(join(toJson(github.event.commits.*.message), ' '), '#major') }}
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISCRIBARIUM_TOKEN }}
+          DEFAULT_BUMP: major

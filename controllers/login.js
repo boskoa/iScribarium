@@ -37,6 +37,7 @@ router.post("/", async (req, res, next) => {
       name: author.name,
       username: author.username,
       email: author.email,
+      admin: author.admin,
     });
   } catch (error) {
     next(error);

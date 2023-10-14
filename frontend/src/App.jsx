@@ -21,6 +21,7 @@ const Category = lazy(() => import("./components/Category"));
 const Categories = lazy(() => import("./components/Categories"));
 const Articles = lazy(() => import("./components/Articles"));
 const AuthorSettings = lazy(() => import("./components/AuthorSettings"));
+const AdminPage = lazy(() => import("./components/AdminPage"));
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -120,6 +121,14 @@ function App() {
           element: (
             <Suspense fallback={<Loading />}>
               <AuthorSettings />
+            </Suspense>
+          ),
+        },
+        {
+          path: "admin",
+          element: (
+            <Suspense fallback={<Loading />}>
+              <AdminPage />
             </Suspense>
           ),
         },

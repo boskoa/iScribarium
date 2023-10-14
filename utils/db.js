@@ -6,7 +6,7 @@ const dataBase =
   process.env.NODE_ENV === "development"
     ? DATABASE_URL
     : PRODUCTION_DATABASE_URL;
-console.log("FOOOOOOOOOOOOOOOO", dataBase);
+
 const sequelize = new Sequelize(dataBase, {
   dialect: "postgres",
 });

@@ -30,6 +30,7 @@ router.get("/", async (req, res, next) => {
         authors.username,
         authors.name,
         authors.email,
+        authors.approved,
         authors.created_at,
         authors.updated_at,
         COUNT(articles.id) AS count,

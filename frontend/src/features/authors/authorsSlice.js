@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "/api/authors";
+export const BASE_URL = "/api/authors";
 
 const authorsAdapter = createEntityAdapter();
 
