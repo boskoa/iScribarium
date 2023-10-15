@@ -84,6 +84,7 @@ function NewArticleForm() {
   const [showModal, setShowModal] = useState(false);
   const newId = useSelector(selectLastArticle);
   const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
@@ -109,6 +110,9 @@ function NewArticleForm() {
           token: loggedAuthor.token,
         }),
       );
+
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 6000);
     } else {
       addMessage({
         content: "Samo prijavljeni autori mogu praviti članke",
@@ -187,7 +191,7 @@ function NewArticleForm() {
       <Button $bg="red" type="button" onClick={handleCancel}>
         Poništi
       </Button>
-      <Button $bg="green" type="submit">
+      <Button disabled={submitted} $bg="green" type="submit">
         Sačuvaj
       </Button>
       {showModal && <CancelModal setShowModal={setShowModal} reset={reset} />}

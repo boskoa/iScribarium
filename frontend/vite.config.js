@@ -3,10 +3,11 @@
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), visualizer()],
   server: {
     proxy: {
       "/api": {
@@ -25,5 +26,31 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/__tests__/setup.js",
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: function (id) {
+          /* for splitting all modules into separate chunks
+          if (id.includes("node_modules")) {
+            return id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
+          }
+          */
+          if (id.includes("zrender")) {
+            return "zrender";
+          }
+          if (id.includes("echarts")) {
+            return "echarts";
+          }
+          if (id.includes("react-router-dom")) {
+            return "react-router-dom";
+          }
+        },
+      },
+    },
   },
 });

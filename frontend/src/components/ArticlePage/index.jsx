@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import { BASE_URL } from "../../features/articles/articlesSlice";
 import useTimedMessage from "../../customHooks/useTimedMessage";
 import { styled } from "styled-components";
 import EditArticleIcon from "./EditArticleIcon";
 import LinkCloud from "./LinkCloud";
+import { Button } from "../NewArticle/NewArticleForm";
+import Loading from "../Loading";
 
 const components = {
   img: ({ alt, src, title }) => (
@@ -15,6 +17,7 @@ const components = {
       alt={alt}
       src={src}
       title={title}
+      loading="lazy"
       style={{
         maxWidth: "100%",
         minWidth: 180,
@@ -68,21 +71,29 @@ export const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
+const CategoriesContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 30px;
+  margin-top: 10px;
+`;
+
+const CategoryButton = styled(Button)`
+  min-width: 70px;
+`;
+
 const Id = styled.p`
   color: #528a8a;
   margin-top: 10px;
-  font-size: 12;
+  font-size: 13px;
+  width: 100%;
 `;
 
 function ArticlePage() {
   const { id } = useParams();
-  const [article, setArticle] = useState({
-    id: null,
-    top: null,
-    left: null,
-    height: null,
-    width: null,
-  });
+  const [article, setArticle] = useState();
   const [cloud, setCloud] = useState();
   const addMessage = useTimedMessage();
   const navigate = useNavigate();
@@ -126,6 +137,8 @@ function ArticlePage() {
     return () => clearTimeout(index);
   }, []);
 
+  if (!article?.id) return <Loading />;
+
   return (
     <ArticleContainer>
       <Title title={`ID: ${article.id}`}>{article?.title}</Title>
@@ -136,8 +149,19 @@ function ArticlePage() {
       >
         {article?.content}
       </ReactMarkdown>
+      <Id style={{ marginTop: 40 }}>Kategorije:</Id>
+      <CategoriesContainer>
+        {article?.categories.map((c) => (
+          <Link
+            to={`/categories/${c.article_category.categoryId}`}
+            key={c.article_category.categoryId}
+          >
+            <CategoryButton $bg="green">{c.name}</CategoryButton>
+          </Link>
+        ))}
+      </CategoriesContainer>
       <Id>
-        <i>ID: {article.id}</i>
+        <i>Autor: {article.author.name}</i>, <i>ID: {article.id}</i>
       </Id>
       <EditArticleIcon articleId={id} />
       <LinkCloud cloud={cloud} />

@@ -2,6 +2,7 @@ import {
   createEntityAdapter,
   createAsyncThunk,
   createSlice,
+  createSelector,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -118,6 +119,13 @@ export function selectAuthorsLoading(state) {
 export function selectAuthorsError(state) {
   return state.authors.error;
 }
+
+export const selectNonAdminAuthors = createSelector(
+  [selectAllAuthors],
+  (authors) => {
+    return authors.filter((a) => !a.admin);
+  },
+);
 
 export const { resetAuthors, resetError } = authorsSlice.actions;
 

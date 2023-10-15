@@ -3,3 +3,4 @@ dist
 node_modules
 cypress.config.js
 **/.eslintrc.cjs
+**/stats.html

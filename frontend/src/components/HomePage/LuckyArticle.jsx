@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Title } from "../ArticlePage";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import styled from "styled-components";
@@ -80,6 +79,10 @@ const RandomButton = styled.button`
   &:active {
     transform: scale(1.03);
   }
+`;
+
+const Title = styled.h1`
+  margin-bottom: 20px;
 `;
 
 function LuckyArticle() {

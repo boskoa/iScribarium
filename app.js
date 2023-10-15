@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const compression = require("compression");
 const { errorHandler } = require("./utils/errorHandler");
 const { router: testRouter } = require("./controllers/testController");
 const { router: articlesRouter } = require("./controllers/articles");
@@ -17,6 +18,7 @@ process.on("uncaughtException", function (err) {
 
 app.use(express.json());
 app.use(cors());
+app.use(compression({ threshold: 20000 }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.static("dist"));
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import {
   getAllAuthors,
-  selectAllAuthors,
+  selectNonAdminAuthors,
   updateAuthor,
 } from "../../features/authors/authorsSlice";
 import { AuthorsContainer } from "../Authors";
@@ -32,7 +32,7 @@ const AdminButton = styled(Button)`
 function AdminPage() {
   const author = useSelector(selectLoggedAuthor);
   const navigate = useNavigate();
-  const authors = useSelector(selectAllAuthors);
+  const authors = useSelector(selectNonAdminAuthors);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,7 +46,6 @@ function AdminPage() {
   }, [dispatch]);
 
   function handleUpdate(a) {
-    console.log(a);
     dispatch(
       updateAuthor({
         id: a.id,
@@ -64,8 +63,8 @@ function AdminPage() {
   if (!authors.length) return <Loading />;
 
   return (
-    <AuthorsContainer style={{ paddingTop: 40 }}>
-      {authors?.map((a) => (
+    <AuthorsContainer style={{ paddingTop: 50 }}>
+      {authors.map((a) => (
         <Author style={{ minHeight: 0 }} key={a.id}>
           <Name>{a.username}</Name>
           <AdminButton onClick={() => handleUpdate(a)} $bg="green">

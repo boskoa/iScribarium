@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /new-article
+Disallow: /edit-article/*
+Disallow: /login
+Disallow: /register
+Disallow: /searched/*
+Disallow: /authors/settings
+Disallow: /admin
+
+User-Agent: AdsBot-Google
+Disallow: /new-article
+Disallow: /edit-article/*
+Disallow: /login
+Disallow: /register
+Disallow: /searched/*
+Disallow: /authors/settings
+Disallow: /admin

@@ -6,7 +6,7 @@ const WhaleContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 20%;
+  top: 35%;
   left: 10%;
   width: 80%;
   z-index: -2;
@@ -26,17 +26,17 @@ function Whale() {
         Math.abs(htmlElement.getBoundingClientRect().top),
       );
       if (element.current) {
-        element.current.style.transform = `translateY(${distance * 0.9}px)`;
+        element.current.style.transform = `translateY(${distance * 0.2}px)`;
       }
     }
 
-    document.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => document.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <WhaleContainer>
+    <WhaleContainer ref={element}>
       <svg
         width="80%"
         version="1.1"

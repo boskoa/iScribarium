@@ -223,6 +223,7 @@ function RegisterData() {
         y={115}
         $submitted={submitted}
         direction=""
+        disabled={submitted}
       >
         Pošalji
       </ButtonContainer>

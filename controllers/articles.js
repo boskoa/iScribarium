@@ -42,13 +42,19 @@ router.get("/", async (req, res, next) => {
       where,
       ...pagination,
       order,
-      include: {
-        model: Category,
-        attributes: ["name"],
-        [whereCategories.length && "where"]: {
-          name: whereCategories,
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+          [whereCategories.length && "where"]: {
+            name: whereCategories,
+          },
         },
-      },
+        {
+          model: Author,
+          attributes: ["name"],
+        },
+      ],
     });
     return res.status(200).json(articles);
   } catch (error) {
