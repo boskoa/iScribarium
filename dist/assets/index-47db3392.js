@@ -1,5 +1,0 @@
-import{s as m,j as a,z as u,a as f}from"./index-c6a04bd1.js";import{r as n}from"./echarts-41e97f80.js";import{M as g,T as c,A as x}from"./index-de8861e9.js";import{b as h}from"./react-router-dom-6f0409ae.js";import"./zrender-e9104294.js";const y=m(x)`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-evenly;
-`;function j(o){let e={};for(const i of o){const s=i.title[0].toLowerCase();e[s]||(e[s]=[]),e[s].push(i)}return e}function E(){const{id:o}=h(),[e,i]=n.useState(""),[s,p]=n.useState({}),[l,d]=n.useState(0);return n.useEffect(()=>{async function r(){const t=await f.get(`/api/categories/${o}`);i(t.data.name),p(j(t.data.articles)),d(t.data.articles.length)}window.scrollTo({top:0,behavior:"smooth"}),o&&r()},[o]),a.jsxs(g,{children:[a.jsxs(c,{style:{marginBottom:20},children:["Kategorija: ",e," (",l," ",l===1?"članak":[2,3,4].includes(l)?"članka":"članaka",")"]}),[...Object.keys(s)].map(r=>a.jsxs("div",{style:{marginBottom:10},children:[a.jsx(c,{children:r.toUpperCase()}),a.jsx(y,{children:s[r].map(t=>a.jsx(u,{to:`/articles/${t.id}`,style:{display:"inline-block",width:"32%"},children:t.title},t.id))})]},r))]})}export{E as default};

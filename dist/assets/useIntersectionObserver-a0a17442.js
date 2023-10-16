@@ -1,0 +1,1 @@
+import{r}from"./echarts-63d4abac.js";function a(e){const[s,t]=r.useState(!1);return r.useEffect(()=>{const n={root:null,rootMargin:"0px",threshold:1};new IntersectionObserver(o=>{const[c]=o;c.isIntersecting?t(!0):t(!1)},n).observe(e.current)},[e]),s}export{a as u};

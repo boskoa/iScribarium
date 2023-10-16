@@ -1,4 +1,4 @@
-import{s,j as i}from"./index-c6a04bd1.js";import{N as e}from"./NewArticleForm-a466e66d.js";import"./echarts-41e97f80.js";import"./zrender-e9104294.js";import"./react-router-dom-6f0409ae.js";import"./useTimedMessage-4f41be4e.js";const r=s.div`
+import{s,j as i}from"./index-2782feee.js";import{N as e}from"./NewArticleForm-66c1136f.js";import"./echarts-63d4abac.js";import"./zrender-1584b751.js";import"./react-router-dom-50fe5a57.js";import"./useTimedMessage-d0ae0a00.js";const r=s.div`
   margin: 20px;
   flex: 1;
 `,n=s.h3`

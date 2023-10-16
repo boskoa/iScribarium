@@ -12,8 +12,9 @@ import {
   MainContainer,
   SpinnerContainer,
   Title,
-} from "../Authors";
-import { Article, AuthorContainer } from "../Authors/Author";
+  Article,
+  AuthorContainer,
+} from "../Authors/authorStyledComponents";
 import styled from "styled-components";
 import Loading from "../Loading";
 

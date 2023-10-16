@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AuthorContainer } from "../Authors/Author";
-import { MainContainer, Title } from "../Authors";
+import {
+  AuthorContainer,
+  MainContainer,
+  Title,
+} from "../Authors/authorStyledComponents";
 import { LinkTo } from "../HomePage/LastArticles";
 import styled from "styled-components";
 

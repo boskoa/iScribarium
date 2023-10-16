@@ -1,4 +1,20 @@
-import ReactEcharts from "echarts-for-react";
+import ReactEChartsCore from "echarts-for-react/lib/core";
+import * as echarts from "echarts/core";
+import { LineChart } from "echarts/charts";
+import {
+  GridComponent,
+  TooltipComponent,
+  TitleComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+
+echarts.use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+]);
 import styled, { useTheme } from "styled-components";
 
 const ChartContainer = styled.div`
@@ -69,7 +85,12 @@ function Graph({ chartData, chartTitle }) {
 
   return (
     <ChartContainer>
-      <ReactEcharts option={option} />
+      <ReactEChartsCore
+        option={option}
+        echarts={echarts}
+        notMerge={true}
+        lazyUpdate={true}
+      />
     </ChartContainer>
   );
 }

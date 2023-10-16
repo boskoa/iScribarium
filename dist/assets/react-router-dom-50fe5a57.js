@@ -1,4 +1,4 @@
-import{r as p,R as pr}from"./echarts-41e97f80.js";/**
+import{r as p,R as pr}from"./echarts-63d4abac.js";/**
  * @remix-run/router v1.7.2
  *
  * Copyright (c) Remix Software Inc.

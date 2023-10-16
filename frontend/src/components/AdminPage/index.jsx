@@ -7,8 +7,10 @@ import {
   selectNonAdminAuthors,
   updateAuthor,
 } from "../../features/authors/authorsSlice";
-import { AuthorsContainer } from "../Authors";
-import { AuthorContainer } from "../Authors/Author";
+import {
+  AuthorsContainer,
+  AuthorContainer,
+} from "../Authors/authorStyledComponents";
 import styled from "styled-components";
 import { Button } from "../NewArticle/NewArticleForm";
 import Loading from "../Loading";

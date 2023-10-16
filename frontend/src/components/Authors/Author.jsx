@@ -1,53 +1,14 @@
-import { Link } from "react-router-dom";
-import { styled } from "styled-components";
 import Graph from "./Graph";
-
-export const AuthorContainer = styled.div`
-  min-height: 80px;
-  border: 3px solid black;
-  border-radius: 8px;
-  padding: 10px;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.1);
-`;
-
-export const Name = styled.h4``;
-
-export const Articles = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 10px;
-`;
-
-const Graphs = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  gap: 5px;
-`;
-
-export const ArticlesContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 10px;
-  z-index: 1;
-`;
-
-export const Article = styled(Link)`
-  font-size: 14px;
-  text-decoration: none;
-  width: 100px;
-  overflow: hidden;
-  color: ${({ theme }) => theme.main.color};
-`;
-
-export const ArticleCount = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`;
+import { memo } from "react";
+import {
+  Article,
+  ArticleCount,
+  Articles,
+  ArticlesContainer,
+  AuthorContainer,
+  Graphs,
+  Name,
+} from "./authorStyledComponents";
 
 function handleMonthlyData(articles) {
   let chartData = {};
@@ -58,12 +19,16 @@ function handleMonthlyData(articles) {
   for (let i = 30; i > 0; i--) {
     today.setDate(today.getDate() + 1);
     chartData[
-      `${today.getMonth() + 1}-${today.getDate().toString().padStart(2, "0")}`
+      `${(today.getMonth() + 1).toString().padStart(2, "0")}-${today
+        .getDate()
+        .toString()
+        .padStart(2, "0")}`
     ] = 0;
   }
+
   const keys = Object.keys(chartData);
   articles.forEach((o) => {
-    const key = o.f4?.slice(6, 10);
+    const key = o.f4?.slice(5, 10);
     if (keys.includes(key)) {
       chartData[key] += 1;
     }
@@ -96,7 +61,7 @@ function handleYearlyData(articles) {
   return chartData;
 }
 
-function Author({ author }) {
+const Author = memo(function Author({ author }) {
   return (
     <AuthorContainer>
       <Name>{author.name}</Name>
@@ -132,6 +97,6 @@ function Author({ author }) {
       )}
     </AuthorContainer>
   );
-}
+});
 
 export default Author;

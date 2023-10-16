@@ -5,7 +5,7 @@ import {
   Articles,
   ArticlesContainer,
   AuthorContainer as CategoryContainer,
-} from "../Authors/Author";
+} from "../Authors/authorStyledComponents";
 import { LinkTo } from "../HomePage/LastArticles";
 
 const Name = styled(LinkTo)`

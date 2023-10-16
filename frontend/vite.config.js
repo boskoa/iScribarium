@@ -28,6 +28,12 @@ export default defineConfig({
     setupFiles: "./src/__tests__/setup.js",
   },
   build: {
+    modulePreload: {
+      // eslint-disable-next-line no-unused-vars
+      resolveDependencies: (_url, _deps, _context) => {
+        return [];
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: function (id) {

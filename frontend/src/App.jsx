@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Layout from "./components/Layout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import HomePage from "./components/HomePage";
 import { alreadyLogged } from "./features/login/loginSlice";
 import Assistant from "./components/Assistant";
 import { getAllArticles } from "./features/articles/articlesSlice";
@@ -10,6 +9,7 @@ import { ThemeProvider } from "styled-components";
 import { dark, light } from "./themes";
 import Loading from "./components/Loading";
 
+const HomePage = lazy(() => import("./components/HomePage"));
 const Login = lazy(() => import("./components/Login"));
 const NewArticle = lazy(() => import("./components/NewArticle"));
 const ArticlePage = lazy(() => import("./components/ArticlePage"));
@@ -37,7 +37,7 @@ function App() {
       ),
     },
     {
-      path: "register",
+      path: "/register",
       element: (
         <Suspense fallback="Loading...">
           <Register />
@@ -50,7 +50,11 @@ function App() {
       children: [
         {
           index: true,
-          element: <HomePage />,
+          element: (
+            <Suspense fallback={<Loading />}>
+              <HomePage />
+            </Suspense>
+          ),
         },
         {
           path: "new-article",

@@ -5,7 +5,7 @@ import {
   Filters,
   MainContainer,
   Title,
-} from "../Authors";
+} from "../Authors/authorStyledComponents";
 import axios from "axios";
 import Category from "./Category";
 
