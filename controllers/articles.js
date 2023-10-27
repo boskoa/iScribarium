@@ -164,7 +164,7 @@ router.patch("/:id", tokenExtractor, async (req, res, next) => {
 
 router.delete("/:id", tokenExtractor, async (req, res, next) => {
   const author = await Author.findByPk(req.decodedToken.id);
-  const article = await Article.findByPk(req.params.id);
+  const article = await Article.findByPk(req.params.id, { include: Category });
 
   if ((!author || author.id !== article.authorId) && !author.admin) {
     return res
